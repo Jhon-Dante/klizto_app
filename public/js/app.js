@@ -21244,13 +21244,13 @@ var _hoisted_12 = {
   "class": "account-item clearfix js-item-menu"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"image\" data-v-5663af57><img src=\"app_home/images/icon/avatar-01.jpg\" alt=\"John Doe\" data-v-5663af57></div><div class=\"content\" data-v-5663af57><a class=\"js-acc-btn\" href=\"#\" data-v-5663af57>john doe <i class=\"fa fa-caret-down\" aria-hidden=\"true\" data-v-5663af57></i></a></div>", 2);
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"image\" data-v-5663af57><img src=\"app_home/images/icon/avatar-01.jpg\" alt=\"John Doe\" data-v-5663af57></div><div class=\"content\" data-v-5663af57><a class=\"js-acc-btn\" href=\"#\" data-v-5663af57>Carlos <i class=\"fa fa-caret-down\" aria-hidden=\"true\" data-v-5663af57></i></a></div>", 2);
 
 var _hoisted_15 = {
   "class": "account-dropdown js-dropdown"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"info clearfix\" data-v-5663af57><div class=\"image\" data-v-5663af57><a href=\"#\" data-v-5663af57><img src=\"app_home/images/icon/avatar-01.jpg\" alt=\"John Doe\" data-v-5663af57></a></div><div class=\"content\" data-v-5663af57><h5 class=\"name\" data-v-5663af57><a href=\"#\" data-v-5663af57>john doe</a></h5><span class=\"email\" data-v-5663af57>johndoe@example.com</span></div></div>", 1);
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"info clearfix\" data-v-5663af57><div class=\"image\" data-v-5663af57><a href=\"#\" data-v-5663af57><img src=\"app_home/images/icon/avatar-01.jpg\" alt=\"John Doe\" data-v-5663af57></a></div><div class=\"content\" data-v-5663af57><h5 class=\"name\" data-v-5663af57><a href=\"#\" data-v-5663af57>Carlos</a></h5><span class=\"email\" data-v-5663af57>carlos@mail.com</span></div></div>", 1);
 
 var _hoisted_17 = {
   "class": "account-dropdown__footer"
