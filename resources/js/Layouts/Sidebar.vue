@@ -2,7 +2,8 @@
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
-            <inertia-link :href="route('dashboard')">
+            <inertia-link
+                :href="route('dashboard')">
                 <center>
                     <img src="images/logo_fondo_claro.png" alt="Klizto" style="width: 50% !important;" />
                 </center>
@@ -12,12 +13,16 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="active">
-                        <inertia-link :href="route('dashboard')">
+                        <inertia-link
+                            :href="route('dashboard')"
+                            :active="route().current('dashboard')">
                             <i class="fa fa-th-large"></i>Dashboard
                         </inertia-link>
                     </li>
                     <li>
-                        <inertia-link :href="route('account')">
+                        <inertia-link
+                            :href="route('account')"
+                            :active="route().current('account')">
                             <i class="fa fa-dollar"></i>Mi Cuenta
                         </inertia-link>
                     </li>
@@ -35,7 +40,9 @@
                         </ul>
                     </li>
                     <li class="has-sub">
-                        <inertia-link :href="route('wallet')">
+                        <inertia-link
+                            :href="route('wallet')"
+                            :active="route().current('wallet')">
                             <i class="fa fa-credit-card"></i>Mi Billetera
                         </inertia-link>
                     </li>
@@ -44,7 +51,9 @@
                             <i class="fa fa-shopping-cart"></i>Mis Ventas</a>
                     </li>
                         <li>
-                        <inertia-link :href="route('publications.index')">
+                        <inertia-link
+                            :href="route('publications.index')"
+                            :active="route().current('publications.index')">
                             <i class="fa fa-tasks"></i>Mis Publicaciones
                         </inertia-link>
                     </li>
@@ -57,7 +66,9 @@
                             <i class="fa fa-book"></i>Reportes</a>
                     </li>
                     <li>
-                        <inertia-link :href="route('settings')">
+                        <inertia-link
+                            :href="route('settings')"
+                            :active="route().current('settings')">
                             <i class="fa fa-cogs"></i>Configuración
                         </inertia-link>
                     </li>
