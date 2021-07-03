@@ -1586,11 +1586,17 @@ section {
     border-top: 1px solid #f2f2f2;
 }
 
-.account-dropdown__footer a {
+.account-dropdown__footer a,el-button {
     display: block;
     color: #333;
     padding: 15px 25px;
     font-size: 14px;
+}
+.account-dropdown__footer a, i {
+    line-height: 1;
+    margin-right: 20px;
+    font-size: 18px;
+    vertical-align: middle;
 }
 
 .account-dropdown__footer a:hover {
@@ -1686,6 +1692,7 @@ section {
     top: 0;
     left: 0;
     right: 0;
+    background-color: #e5e5e5;
 }
 
 .header-mobile .header-mobile__bar {
