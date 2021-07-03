@@ -3,6 +3,7 @@
         <jet-banner />
         <div class="page-wrapper">
             <div class="min-h-screen bg-gray-100">
+                <HeaderMobile />
                 <Header />
                 <Sidebar />
                 <div class="page-container">
@@ -64,16 +65,18 @@
                                         <div class="account-wrap">
                                             <div class="account-item clearfix js-item-menu">
                                                 <div class="image">
-                                                    <img src="{{ asset('assets/app_home/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                                                    <img src="app_home/images/icon/avatar-01.jpg" alt="John Doe" />
                                                 </div>
                                                 <div class="content">
-                                                    <a class="js-acc-btn" href="#">john doe</a>
+                                                    <a class="js-acc-btn" href="#">john doe
+                                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                                    </a>
                                                 </div>
                                                 <div class="account-dropdown js-dropdown">
                                                     <div class="info clearfix">
                                                         <div class="image">
                                                             <a href="#">
-                                                                <img src="{{ asset('assets/app_home/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                                                                <img src="app_home/images/icon/avatar-01.jpg" alt="John Doe" />
                                                             </a>
                                                         </div>
                                                         <div class="content">
@@ -84,8 +87,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="account-dropdown__footer">
-                                                        <a href="#">
-                                                            <i class="zmdi zmdi-power"></i>Cerrar Sesión</a>
+                                                        <el-button @click="logout">
+                                                            <i class="zmdi zmdi-power"></i>Cerrar Sesión
+                                                        </el-button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -124,6 +128,7 @@
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
     import Sidebar from '@/Layouts/Sidebar'
     import Header from '@/Layouts/Header'
+    import HeaderMobile from '@/Layouts/HeaderMobile'
 
     export default {
         components: {
@@ -135,6 +140,7 @@
             JetResponsiveNavLink,
             Sidebar,
             Header,
+            HeaderMobile,
         },
 
         data() {

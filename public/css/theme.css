@@ -1457,16 +1457,17 @@ section {
     color: #333;
     text-transform: capitalize;
     font-weight: 500;
+    text-decoration: none;
 }
 
-.account-item > .content > a:after {
+/*.account-item > .content > a:after {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     content: '\f2f9';
     display: inline-block;
     font-size: 16px;
     margin-left: 5px;
-}
+}*/
 
 .account-item > .content > a:hover {
     color: #666;

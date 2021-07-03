@@ -12,6 +12,8 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('app_home/css/font-face.css') }}">
         <link href="{{ asset('vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
         <link href="{{ asset('vendor/font-awesome-5/css/fontawesome-all.min.css') }}" rel="stylesheet" media="all">
         <link href="{{ asset('vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet" media="all">
@@ -28,26 +30,18 @@
         <link href="{{ asset('vendor/select2/select2.min.css') }}" rel="stylesheet" media="all">
         <link href="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" media="all">
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-face.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/theme.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/theme.css') }}" media="all" defer>
+
+        <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts.css') }}"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}"> -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 
         <!-- Scripts -->
         @routes
 
-        <script src="{{ mix('js/app.js') }}" defer></script>
-        <script src="{{ asset('js/core.min.js') }}"></script>
-        <script src="{{ asset('js/script.js') }}"></script>
-        <script>
-            $(document).ready(function(){
-                $('.preloader').fadeOut('slow');
-            });
-        </script>
         
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased animsition">
     <div class="preloader">
       <div class="preloader-body">
         <div class="cssload-bell">
@@ -75,27 +69,36 @@
             <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
         @endenv
             <!-- Jquery JS-->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+    <!-- <script src="{{ asset('js/core.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/script.js') }}"></script> -->
     <script src="{{ asset('vendor/jquery-3.2.1.min.js') }}"></script>
     <!-- Bootstrap JS-->
     <script src="{{ asset('vendor/bootstrap-4.1/popper.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-4.1/bootstrap.min.js') }}"></script>
     <!-- Vendor JS       -->
-    <script src="{{ asset('vendor/slick/sli') }}ck.min.js">
+    <script src="{{ asset('vendor/slick/slick.min.js') }}">
     </script>
     <script src="{{ asset('vendor/wow/wow.min.js') }}"></script>
     <script src="{{ asset('vendor/animsition/animsition.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap-progressbar/bootstrap-progressb') }}ar.min.js">
+    <script src="{{ asset('vendor/bootstrap-progressbar/bootstrap-progressbar.min.js') }}">
     </script>
     <script src="{{ asset('vendor/counter-up/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('vendor/counter-up/jquery.counter') }}up.min.js">
+    <script src="{{ asset('vendor/counter-up/jquery.counterup.min.js') }}">
     </script>
     <script src="{{ asset('vendor/circle-progress/circle-progress.min.js') }}"></script>
     <script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('vendor/chartjs/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/select2/selec') }}t2.min.js">
+    <script src="{{ asset('vendor/select2/select2.min.js') }}">
     </script>
 
     <!-- Main JS-->
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('app_home/js/main.js') }}" defer></script>
     </body>
+
+    <script>
+        $(document).ready(function(){
+            $('.preloader').fadeOut('slow');
+        });
+    </script>
 </html>

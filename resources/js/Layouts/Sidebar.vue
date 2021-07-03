@@ -2,9 +2,11 @@
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
-            <a href="#">
-                <img src="images/logo_fondo_claro.png" alt="Klizto" style="width: 50% !important;" />
-            </a>
+            <inertia-link :href="route('dashboard')">
+                <center>
+                    <img src="images/logo_fondo_claro.png" alt="Klizto" style="width: 50% !important;" />
+                </center>
+            </inertia-link>
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
@@ -42,7 +44,7 @@
                             <i class="fa fa-shopping-cart"></i>Mis Ventas</a>
                     </li>
                         <li>
-                        <inertia-link :href="route('publications')">
+                        <inertia-link :href="route('publications.index')">
                             <i class="fa fa-tasks"></i>Mis Publicaciones
                         </inertia-link>
                     </li>
@@ -56,7 +58,7 @@
                     </li>
                     <li>
                         <inertia-link :href="route('settings')">
-                            <i class="fa fa-book"></i>Configuración
+                            <i class="fa fa-cogs"></i>Configuración
                         </inertia-link>
                     </li>
                 </ul>

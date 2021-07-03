@@ -15,7 +15,7 @@ class PublicationsController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Publications/PublicationsComponent');
+        return Inertia::render('Buyer/Publications/PublicationsComponent');
     }
 
     /**

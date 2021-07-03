@@ -2,9 +2,9 @@
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
-            <a href="{{ url('/')}}">
+            <inertia-link :href="route('dashboard')">
                 <img src="images/logo_fondo_claro.png" width="140"/>
-            </a>
+            </inertia-link>
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">

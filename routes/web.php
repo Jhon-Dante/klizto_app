@@ -37,10 +37,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('account',[AccountController::class, 'index'])->name('account');
 
 	Route::get('wallet', [WalletController::class, 'index'])->name('wallet');
-	Route::get('publications', [PublicationsController::class, 'index'])->name('publications');
+
+	//Publicaciones
+	Route::resource('publications', PublicationsController::class)->middleware(['auth:sanctum', 'verified']);
 	Route::inertia('/shop', 'ShopComponent');
 
-
+	//Negocios
+	Route::resource('premises', PremisesController::class)->middleware(['auth:sanctum', 'verified']);
 	//Admin
 	Route::get('settings', [SettingsController::class, 'index'])->name('settings');
 });
