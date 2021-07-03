@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <link rel="stylesheet" type="text/css" href="{{ asset('app_home/css/font-face.css') }}">
         <link href="{{ asset('vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
@@ -41,7 +41,7 @@
 
         
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased animsition">
     <div class="preloader">
       <div class="preloader-body">
         <div class="cssload-bell">
@@ -69,7 +69,7 @@
             <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
         @endenv
             <!-- Jquery JS-->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
     <!-- <script src="{{ asset('js/core.min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/script.js') }}"></script> -->
     <script src="{{ asset('vendor/jquery-3.2.1.min.js') }}"></script>
