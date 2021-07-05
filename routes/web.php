@@ -3,10 +3,13 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\WalletController;
-use App\Http\Controllers\PublicationsController;
+use App\Http\Controllers\Admin\WalletController;
+use App\Http\Controllers\Admin\PublicationsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\PremisesController;
+use App\Http\Controllers\Admin\ShopController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,17 +37,21 @@ Route::group(['middleware' => 'auth'], function () {
 	    return Inertia::render('Dashboard');
 	})->name('dashboard');
 
-	Route::get('account',[AccountController::class, 'index'])->name('account');
+});
 
-	Route::get('wallet', [WalletController::class, 'index'])->name('wallet');
+Route::group(['middleware' => 'auth'], function () {
 
+	Route::resource('account',AccountController::class);
+	Route::resource('wallet', WalletController::class);
 	//Publicaciones
-	Route::resource('publications', PublicationsController::class)->middleware(['auth:sanctum', 'verified']);
-	Route::inertia('/shop', 'ShopComponent');
+	Route::resource('publications', PublicationsController::class);
 
+	Route::resource('shop', ShopController::class);
 	//Negocios
-	Route::resource('premises', PremisesController::class)->middleware(['auth:sanctum', 'verified']);
+	Route::get('premises', [PremisesController::class, 'index'])->name('premises');
+	Route::get('premises/create', [PremisesController::class, 'create'])->name('premises/create');
 	//Admin
 	Route::get('settings', [SettingsController::class, 'index'])->name('settings');
 });
+
 include "admin.php";
