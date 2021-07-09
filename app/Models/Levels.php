@@ -16,6 +16,7 @@ class Levels extends Model
 	const EMPLOYED = 2;
 	const BUYER = 3;
 	const CLIENT = 4;
+    const OWNER = 5;
 
     public function user()
     {

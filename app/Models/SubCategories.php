@@ -17,4 +17,9 @@ class SubCategories extends Model
     {
     	$this->belongTo('App\Models\Categories','category_id');
     }
+    
+    public function service()
+    {
+    	$this->HasMany('App\Models\Services','category_id');
+    }
 }

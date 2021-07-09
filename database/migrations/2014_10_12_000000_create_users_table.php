@@ -19,12 +19,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('phone');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
 
             $table->unsignedBigInteger('level_id');
             $table->foreign('level_id')->references('id')->on('levels');
+
+            
 
             $table->enum('status',['0','1'])->default('1')->comment('1: Activo; 2: Inactivo;');
             $table->enum('verified',['0','1'])->default('1')->comment('Verificación por correo. 1: Activo, 0: Inactivo');

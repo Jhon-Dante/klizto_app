@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Categories;
 use App\Models\SubCategories;
 use App\Models\User;
+use App\Models\Services;
+
 use Inertia\Inertia;
 
 class SettingsController extends Controller

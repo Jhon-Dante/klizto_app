@@ -14,25 +14,25 @@ class CategoriesSeeder extends Seeder
     public function run()
     {
         \DB::table('categories')->insert([
-			'name' => 'Secado',
+			'name' => 'Cabello',
 			'image' => null,
 			'status' => 1
 		]);
 
 		\DB::table('categories')->insert([
-			'name' => 'Planchado',
+			'name' => 'Pies',
 			'image' => null,
 			'status' => 1
 		]);
 
 		\DB::table('categories')->insert([
-			'name' => 'Tintes',
+			'name' => 'Manos',
 			'image' => null,
 			'status' => 1
 		]);
 
 		\DB::table('categories')->insert([
-			'name' => 'Esmaltado',
+			'name' => 'Cuerpo Entero',
 			'image' => null,
 			'status' => 1
 		]);

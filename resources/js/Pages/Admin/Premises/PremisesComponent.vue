@@ -6,11 +6,11 @@
                     <div class="overview-wrap">
                         <h2 class="title-1">Mis Negocios</h2>
                         <div class="float-right">
-                        	<!-- <inertia-link
+                        	<inertia-link
 				                :href="route('premises.create')"
 				              >
 				                Añadir
-				             </inertia-link> -->
+				             </inertia-link>
                         </div>
                     </div>
                 </div>

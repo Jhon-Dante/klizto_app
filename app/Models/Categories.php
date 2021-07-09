@@ -14,6 +14,11 @@ class Categories extends Model
 
     public function subcategory()
     {
-    	$this->HasMany('App\Models\Categories','category_id');
+    	$this->HasMany('App\Models\SubCategories','category_id');
+    }
+
+    public function service()
+    {
+    	$this->HasMany('App\Models\Services','category_id');
     }
 }

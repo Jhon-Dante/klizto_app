@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Categories;
 
 class CategoriesController extends Controller
 {
@@ -12,9 +13,14 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get()
     {
-        //
+        $categories = Categories::where('deleted_at',null)->get();
+
+        return response()->json([
+            'result' => true,
+            'categories' => $categories
+        ]);
     }
 
     /**

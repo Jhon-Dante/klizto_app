@@ -3,12 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\Admin\WalletController;
-use App\Http\Controllers\Admin\PublicationsController;
-use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\Admin\PremisesController;
-use App\Http\Controllers\Admin\ShopController;
+use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\BanksController;
 
 
 /*
@@ -34,24 +31,14 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
 
 	Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-	    return Inertia::render('Dashboard');
+	    return Inertia::render('Admin/Dashboard');
 	})->name('dashboard');
 
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::get('get/services/{category_id}', [ServicesController::class, 'get']);
+Route::get('get/categories', [CategoriesController::class, 'get'])->name('get_categories');
+Route::get('get/banks', [BanksController::class, 'get'])->name('get_banks');
 
-	Route::resource('account',AccountController::class);
-	Route::resource('wallet', WalletController::class);
-	//Publicaciones
-	Route::resource('publications', PublicationsController::class);
-
-	Route::resource('shop', ShopController::class);
-	//Negocios
-	Route::get('premises', [PremisesController::class, 'index'])->name('premises');
-	Route::get('premises/create', [PremisesController::class, 'create'])->name('premises/create');
-	//Admin
-	Route::get('settings', [SettingsController::class, 'index'])->name('settings');
-});
 
 include "admin.php";

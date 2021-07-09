@@ -27,7 +27,7 @@
 	                        	<div class="form-group">
 	                        		<label>Categoria</label>
 	                        		<select class="form-control select2" v-model="form.categories_id">
-	                        			<option value="1" v-for="category in categories" :key="category.id">{{category.name}}</option>
+	                        			<option :value="category.id" v-for="category in categories" :key="category.id">{{category.name}}</option>
 	                        		</select>
 	                        	</div>
 	                        	<center>

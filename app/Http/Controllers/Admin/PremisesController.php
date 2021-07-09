@@ -47,18 +47,12 @@ class PremisesController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate(
-        //     [
-        //         'name' => 'required',
-        //         'category_id' => 'required'
-        //     ]
-        // );
 
-        $premise = Premises::insert([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'user_id' => \Auth::id()
-        ]);
+        $premise = New Premises;
+        $premise->nombre = $request->name;
+        $premise->category_id = $request->categories_id;
+        $premise->user_id = \Auth::id();
+        $premise->save();
 
         return Redirect::route('premises.index');
     }

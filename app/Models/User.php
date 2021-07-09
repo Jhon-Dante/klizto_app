@@ -26,10 +26,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','level_id'
+        'name', 'profile_photo_path', 'email','phone', 'password','level_id',
     ];
 
-    protected $with = ['level'];
+    protected $with = ['level','services'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -64,5 +64,21 @@ class User extends Authenticatable
     public function level()
     {
         return $this->belongsTo('App\Models\Levels','level_id');
+    }
+    public function premises()
+    {
+        return $this->hasMany('App\Models\Premises','user_id');
+    }
+    public function wallet()
+    {
+        return $this->hasMany('App\Models\Wallet','user_id');
+    }
+    public function services()
+    {
+        return $this->belongsTo('App\Models\Services','services_id');
+    }
+    public function bank()
+    {
+        return $this->belongsTo('App\Models\Banks','bank_id');
     }
 }

@@ -15,6 +15,10 @@ class CreatePublicationsTable extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->enum('status',['0','1','2'])->default('1')->comment('0: Inactivo; 1: Activo; 2: Eliminado;');
+            
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

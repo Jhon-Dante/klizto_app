@@ -10,8 +10,8 @@ class Premises extends Model
     use HasFactory;
 
     protected $table='premises';
-    protected $fillable=['nombre, category_id, subcategory_id, user_id','status'];
-    protected $wit=['category','subcategory','user'];
+    protected $fillable=['nombre', 'user_id','status','services_id','count_bank','bank_id'];
+    protected $with=['services_id','bank','user'];
 
     public function category()
     {
@@ -26,5 +26,9 @@ class Premises extends Model
     public function user()
     {
     	$this->belongsTo('App\Models\User','user_id');
+    }
+    public function bank()
+    {
+        $this->belongsTo('App\Models\Banks','bank_id');
     }
 }

@@ -32,5 +32,10 @@ class LevelsSeeder extends Seeder
 			'name' => 'Cliente',
 			'code' => 'user/admin'
 		]);
+
+		\DB::table('levels')->insert([
+			'name' => 'Encargado',
+			'code' => 'user/Owner'
+		]);
     }
 }
