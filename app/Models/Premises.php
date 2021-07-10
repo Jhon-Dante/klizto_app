@@ -10,25 +10,28 @@ class Premises extends Model
     use HasFactory;
 
     protected $table='premises';
-    protected $fillable=['nombre', 'user_id','status','services_id','count_bank','bank_id'];
-    protected $with=['services_id','bank','user'];
+    protected $fillable=['user_id','service_id','count_bank','bank_id','owner_id','status'];
+    protected $with=['services','bank','owner'];
 
-    public function category()
+    public function services()
     {
-    	$this->belongsTo('App\Models\Categories','category_id');
+        return $this->belongsTo('App\Models\Services','service_id')
     }
-
-    public function subcategory()
+    public function owner()
     {
-    	$this->belongsTo('App\Models\SubCategories','subcategory_id');
-    }
-
-    public function user()
-    {
-    	$this->belongsTo('App\Models\User','user_id');
+    	return $this->belongsTo('App\Models\Owner','owner_id');
     }
     public function bank()
     {
-        $this->belongsTo('App\Models\Banks','bank_id');
+        return $this->belongsTo('App\Models\Banks','bank_id');
+    }
+    public function wallet()
+    {
+        return $this->HasMany('App\Models\Wallet','premise_id');
+    }
+
+    public function branches()
+    {
+        return $this->HasMany('App\Models\Branches','premise_id')
     }
 }

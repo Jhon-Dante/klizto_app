@@ -10,11 +10,11 @@ class Wallet extends Model
     use HasFactory;
 
     protected $table='wallet';
-    protected $fillable=['option','monto','description','user_id'];
-    protected $with=['user'];
+    protected $fillable=['option','monto','description','premise_id','status'];
+    protected $with=['premise'];
 
-    public function user()
+    public function premise()
     {
-    	$this->belongsTo('App\Models\User','user_id');
+    	$this->belongsTo('App\Models\Premises','premise_id');
     }
 }

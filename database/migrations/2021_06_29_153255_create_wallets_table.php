@@ -18,8 +18,11 @@ class CreateWalletsTable extends Migration
             $table->enum('option',['1','2'])->default('1');
             $table->integer('monto');
             $table->longText('description');
-            // $table->unsignedBigInteger('user_id');
-            // $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('premise_id');
+            $table->foreign('premise_id')->references('id')->on('premises');
+
+            $table->enum('status',['0','1','2'])->default('1')->comment('0: Cancelado; 1:EnEspera; 2:Anulado');
             
             $table->timestamps();
         });

@@ -27,8 +27,6 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('level_id');
             $table->foreign('level_id')->references('id')->on('levels');
 
-            
-
             $table->enum('status',['0','1'])->default('1')->comment('1: Activo; 2: Inactivo;');
             $table->enum('verified',['0','1'])->default('1')->comment('Verificación por correo. 1: Activo, 0: Inactivo');
 

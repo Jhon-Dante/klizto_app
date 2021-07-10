@@ -18,7 +18,7 @@ class Services extends Model
     }
     public function user()
     {
-        return $this->HasMany('App\Models\User','services_id');
+        return $this->HasMany('App\Models\User','service_id');
     }
 
 }

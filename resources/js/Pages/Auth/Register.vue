@@ -4,13 +4,17 @@
         <jet-validation-errors class="mb-4" />
 
         <form @submit.prevent="submit">
+            <center><img src="images/logo_fondo_claro.png" width="140"/></center>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item active">
+                                    <a class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="false">Inicio de sesión</a>
+                                </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="logo-tab" data-toggle="tab" href="#logo" role="tab" aria-controls="logo" aria-selected="true">Logo</a>
+                                    <a class="nav-link" id="logo-tab" data-toggle="tab" href="#logo" role="tab" aria-controls="logo" aria-selected="true">Logo</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="false">Datos básicos</a>
@@ -21,33 +25,70 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="employed-tab" data-toggle="tab" href="#employed" role="tab" aria-controls="employed" aria-selected="false">Encargado</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="false">Inicio de sesión</a>
-                                </li>
                             </ul>
                             <div class="tab-content pl-3 p-1" id="myTabContent">
-                                <div class="tab-pane fade show active" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+                                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                                    <div class="mt-4">
+                                        <jet-label for="email" value="Email" />
+                                        <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required />
+                                    </div>
+
+
+
+                                    <div class="mt-4">
+                                        <jet-label for="password" value="Contraseña" />
+                                        <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <jet-label for="password_confirmation" value="Confirmar Contraseña" />
+                                        <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
+                                    </div>
+                                    <div class="mt-4" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
+                                        <jet-label for="terms">
+                                            <div class="flex items-center">
+                                                <jet-checkbox name="terms" id="terms" v-model:checked="form.terms" />
+
+                                                <div class="ml-2">
+                                                    I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Políticas de privacidad</a>
+                                                </div>
+                                            </div>
+                                        </jet-label>
+                                    </div>
+                                    <div class="float-right mt-4">
+                                        <a class="btn btn-success text-white" @click="tabClick(2)">Siguiente</a>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
                                     <div>
                                         <jet-label for="name" value="Nombre" />
-                                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+                                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autocomplete="name" />
                                     </div>
                                     <div class="mt-4 mb-4">
                                         <center>
                                             <img id="imageSelected" class="shadow mb-5" src="#" @click="imageClick" width="300" height="300" />
 
-                                            <jet-input id="image" type="file" accept=".png" name="image" @change="imageSelected" v-model="form.image" required autofocus/>
+                                            <jet-input id="image" type="file" accept=".png" name="image" @change="imageSelected" required/>
                                             <p>Recomendado: Imagen de mismas dimensiones. Ejm: 300x300</p>
                                         </center>
+                                    </div>
+                                    <div>
+                                        <div class="float-left mt-4">
+                                            <a class="btn btn-success text-white" @click="tabClick(1)">Anterior</a>
+                                        </div>
+                                        <div class="float-right mt-4">
+                                            <a class="btn btn-success text-white" @click="tabClick(3)">Siguiente</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                                     <div>
                                         <jet-label for="direction" value="Dirección" />
-                                        <textarea id="direction" class="form-control mt-1 block w-full" v-model="form.direction" required autofocus autocomplete="direction" ></textarea>
+                                        <textarea id="direction" class="form-control mt-1 block w-full" v-model="form.direction" required autocomplete="direction" ></textarea>
                                     </div>
                                     <div>
                                         <jet-label for="name" value="Descripción" />
-                                        <textarea id="description" class="form-control mt-1 block w-full" v-model="form.description" required autofocus autocomplete="description" ></textarea>
+                                        <textarea id="description" class="form-control mt-1 block w-full" v-model="form.description" required autocomplete="description" ></textarea>
                                     </div>
                                     <div class="mt-4">
                                         <jet-label for="phone" value="Teléfono" />
@@ -76,6 +117,12 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="float-left mt-4">
+                                        <a class="btn btn-success text-white" @click="tabClick(2)">Anterior</a>
+                                    </div>
+                                    <div class="float-right mt-4">
+                                        <a class="btn btn-success text-white" @click="tabClick(4)">Siguiente</a>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="banks" role="tabpanel" aria-labelledby="banks-tab">
                                     <div class="mt-4">
@@ -92,6 +139,12 @@
                                     <div class="mb-4">
                                         <jet-label for="count_bank" value="Número de cuenta" />
                                         <jet-input type="number" id="count_bank" class="mt-1 block w-full" v-model="form.count_bank" required />
+                                    </div>
+                                    <div class="float-left mt-4">
+                                        <a class="btn btn-success text-white" @click="tabClick(3)">Anterior</a>
+                                    </div>
+                                    <div class="float-right mt-4">
+                                        <a class="btn btn-success text-white" @click="tabClick(5)">Siguiente</a>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="employed" role="tabpanel" aria-labelledby="employed-tab">
@@ -111,43 +164,15 @@
                                         <jet-label for="phone_employed" value="Teléfono(Personal)" />
                                         <jet-input type="text" id="phone_employed" class="mt-1 block w-full" v-model="form.phone_employed" required />
                                     </div>
-                                    <div class="mt-4">
-                                        <jet-label for="password_personal" value="Contraseña" />
-                                        <jet-input id="password_personal" type="password" class="mt-1 block w-full" v-model="form.password_personal" required autocomplete="new-password" />
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <jet-label for="password_confirmation_personal" value="Confirmar Contraseña" />
-                                        <jet-input id="password_confirmation_personal" type="password" class="mt-1 block w-full" v-model="form.password_confirmation_personal" required autocomplete="new-password" />
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
-                                    <div class="mt-4">
-                                        <jet-label for="email" value="Email" />
-                                        <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required />
-                                    </div>
-
-
-
-                                    <div class="mt-4">
-                                        <jet-label for="password" value="Contraseña" />
-                                        <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <jet-label for="password_confirmation" value="Confirmar Contraseña" />
-                                        <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
-                                    </div>
-                                    <div class="mt-4" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
-                                        <jet-label for="terms">
-                                            <div class="flex items-center">
-                                                <jet-checkbox name="terms" id="terms" v-model:checked="form.terms" />
-
-                                                <div class="ml-2">
-                                                    I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Políticas de privacidad</a>
-                                                </div>
-                                            </div>
-                                        </jet-label>
+                                    <div>
+                                        <div class="float-left mt-4">
+                                            <a class="btn btn-success text-white" @click="tabClick(4)">Anterior</a>
+                                        </div>
+                                        <div class="float-right mt-4">
+                                            <jet-button class="btn btn-success text-white" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                                                Registrar
+                                            </jet-button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -162,9 +187,6 @@
                         Ya está registrado?
                     </inertia-link>
 
-                    <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Registrar
-                    </jet-button>
                 </div>
             </center>
         </form>
@@ -205,25 +227,27 @@
                 services:[],
                 banks:[],
                 form: this.$inertia.form({
-                    image: null,
+                    email: '',
+                    password: '',
+                    password_confirmation: '',
+                    //
+                    image: '',
                     name: '',
+                    //
                     direction:'',
                     description:'',
-                    email: '',
                     phone:'',
+                    category_id:'',
+                    services_id:'',
+                    //
                     bank_id:'',
                     count_bank:'',
+                    //
                     name_employed: '',
                     last_name_employed: '',
                     personal_email: '',
-                    password_personal:'',
-                    password_confirmation_personal:'',
                     phone_employed: '',
-                    password: '',
-                    password_confirmation: '',
                     terms: false,
-                    category_id:'',
-                    services_id:'',
                 })
             }
         },
@@ -255,10 +279,23 @@
             imageClick(){
                 $('#imageSelected').click();
             },
-            imageSelected(event){
-                $('.preloader').fadeIn('300');
-
-                console.log(event.target.files[0]);
+            tabClick(option){
+                if(option == 1) {
+                    $('#login-tab').click();
+                }else if(option == 2){
+                    $('#logo-tab').click();
+                }else if(option == 3){
+                    $('#basic-tab').click();
+                }else if(option == 4){
+                    $('#banks-tab').click();
+                }else{
+                    $('#employed-tab').click();
+                }
+            },
+            imageSelected(e){
+                $('.preloader').fadeIn('fast');
+                //
+                e.preventDefault();
                 var reader = new FileReader();
                 reader.onload = function (e) {
                 $('#imageSelected')
@@ -267,9 +304,9 @@
                     .height(300);
                 };
 
-                reader.readAsDataURL(event.target.files[0]);
-                this.form.image = event.target.files[0].name;
-                $('.preloader').fadeOut('slow');
+                reader.readAsDataURL(e.target.files[0]);
+                this.form.image = e.target.files[0];
+                $('.preloader').fadeOut('fast');
             },
             submit() {
                 this.form.post(this.route('register'), {
