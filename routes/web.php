@@ -31,7 +31,9 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
 
 	Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-	    return Inertia::render('Admin/Dashboard');
+	    return Inertia::render('Admin/Dashboard',[
+	    	'user' => \Auth::user
+	    ]);
 	})->name('dashboard');
 
 });

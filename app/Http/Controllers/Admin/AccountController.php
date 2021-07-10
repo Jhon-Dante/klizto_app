@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Wallet;
+use App\Models\Premises;
+use App\Models\Branches;
+use App\Models\Services;
 
 class AccountController extends Controller
 {
@@ -16,9 +20,18 @@ class AccountController extends Controller
      */
     public function index()
     {
+        // dd(\Auth::user()->id);
         $user=User::find(\Auth::id());
+        $premises=Premises::where('user_id',\Auth::user()->id)->first();
+        $branches=Branches::where('premise_id', $premises->id)->get();
+        $wallet=Wallet::where('premise_id', $premises->id)->get();
+
+
         return inertia::render('Admin/Account/AccountComponent',[
-            'user' => $user
+            'user' => $user,
+            'premises' => $premises,
+            'branches' => $branches,
+            'wallet' => $wallet
         ]);
     }
 

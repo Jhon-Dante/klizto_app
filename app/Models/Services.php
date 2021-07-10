@@ -11,14 +11,11 @@ class Services extends Model
 
     protected $table='services';
     protected $fillable=['name','description','category_id','status'];
+    protected $with=['category'];
 
     public function category()
     {
     	return $this->belongsTo('App\Models\Categories','category_id');
-    }
-    public function user()
-    {
-        return $this->HasMany('App\Models\User','service_id');
     }
 
 }

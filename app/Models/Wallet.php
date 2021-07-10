@@ -9,9 +9,9 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    protected $table='wallet';
+    protected $table='wallets';
     protected $fillable=['option','monto','description','premise_id','status'];
-    protected $with=['premise'];
+    // protected $with=['premise'];
 
     public function premise()
     {

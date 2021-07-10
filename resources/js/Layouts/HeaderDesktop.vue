@@ -60,7 +60,7 @@
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="app_home/images/icon/avatar-01.jpg" alt="John Doe" />
+                                    <img src="#" alt="Logo" />
                                 </div>
                                 <div class="content">
                                     <a class="js-acc-btn" href="#">Carlos
@@ -71,14 +71,14 @@
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="app_home/images/icon/avatar-01.jpg" alt="John Doe" />
+                                                <img src="#" alt="Logo" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
                                                 <a href="#">Carlos</a>
                                             </h5>
-                                            <span class="email">carlos@mail.com</span>
+                                            <span class="email">Carlos@gmail.com</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__footer">
@@ -99,6 +99,12 @@
 
 <script>
 	export default {
+        computed: {
+          user() {
+            return this.$page.props.auth.user
+          }
+        },
+        props:['user'],
         data() {
             return {
                 showingNavigationDropdown: false,
@@ -108,6 +114,9 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
+        },
+        mounted(){
+            // console.log(user);
         }
 	}
 </script>

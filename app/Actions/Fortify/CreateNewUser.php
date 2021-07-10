@@ -5,6 +5,11 @@ namespace App\Actions\Fortify;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Levels;
+use App\Models\Owner;
+use App\Models\Premises;
+use App\Models\Services;
+use App\Models\Wallet;
+use App\Models\Branches;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +28,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
-        dd($input);
+        // dd($input);
         Validator::make($input, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
@@ -52,21 +57,15 @@ class CreateNewUser implements CreatesNewUsers
 
         $level_id=4;
 
-        return DB::transaction(function () use ($input, $level_id, $wallet) {
+        return DB::transaction(function () use ($input, $level_id) {
             return tap(User::create([
                 'name' => $input['name'],
-                'profile_photo_path' => $this->uploadImage(1),
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
                 'phone' => $input['phone'],
-                'level_id' => $level_id,
-                'count_bank' => $input['count_bank'],
-                'bank_id' => $input['bank_id'],
-                'services_id' => $input['services_id']
-
-            ]), function (User $user) {
-                // $this->createPremise($user, $input);
-                // $this->createWallet($user,);
+                'profile_photo_path' => $this->uploadImage(1),
+                'level_id' => $level_id
+            ]), function (User $user) use ($input) {
                 $this->createOwner($user, $input);
                 $this->createTeam($user, $input);
             });
@@ -96,7 +95,7 @@ class CreateNewUser implements CreatesNewUsers
 
     protected function createOwner(User $user, $input)
     {
-        $owner=\DB::table('owner')->insert([
+        $owner=Owner::create([
             'name' => $input['name_employed'],
             'last_name' => $input['last_name_employed'],
             'phone' => $input['phone_employed'],
@@ -108,13 +107,15 @@ class CreateNewUser implements CreatesNewUsers
 
     protected function createPremise($user, $input, $owner)
     {
-        $premise=\DB::table('premises')->insert([
+        $premise=Premises::create([
             'user_id' => $user->id,
-            'service_id' => $input['service_id'],
+            'service_id' => $input['services_id'],
             'count_bank' => $input['count_bank'],
             'bank_id' => $input['bank_id'],
             'owner_id' => $owner->id
         ]);
+
+        // $premise=\DB::table('premises')->where()
 
         $this->createWallet($premise);
         $this->createBranch($premise, $input);
@@ -122,17 +123,16 @@ class CreateNewUser implements CreatesNewUsers
 
     protected function createWallet($premise)
     {
-        $wallet= \DB::table('wallets')->insert([
+        $wallet= Wallet::create([
             'monto' => 0,
             'description' => 'Bienvenido',
-            'premise_id' => $premise->id,
-            'status' => 0
+            'premise_id' => $premise->id
         ]);
     }
 
     protected function createBranch($premise, $input)
     {
-        $premise=\DB::table('branches')->insert([
+        $branch=Branches::create([
             'direction' => $input['direction'],
             'phone' => $input['description'],
             'premise_id' => $premise->id,

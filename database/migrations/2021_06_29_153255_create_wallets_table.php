@@ -22,7 +22,7 @@ class CreateWalletsTable extends Migration
             $table->unsignedBigInteger('premise_id');
             $table->foreign('premise_id')->references('id')->on('premises');
 
-            $table->enum('status',['0','1','2'])->default('1')->comment('0: Cancelado; 1:EnEspera; 2:Anulado');
+            $table->enum('status',['0','1','2'])->default('1')->comment('0: EnEspera; 1:Cancelado; 2:Anulado');
             
             $table->timestamps();
         });

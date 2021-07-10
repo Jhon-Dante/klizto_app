@@ -15,7 +15,7 @@ class Premises extends Model
 
     public function services()
     {
-        return $this->belongsTo('App\Models\Services','service_id')
+        return $this->belongsTo('App\Models\Services','service_id');
     }
     public function owner()
     {
@@ -32,6 +32,6 @@ class Premises extends Model
 
     public function branches()
     {
-        return $this->HasMany('App\Models\Branches','premise_id')
+        return $this->HasMany('App\Models\Branches','premise_id');
     }
 }

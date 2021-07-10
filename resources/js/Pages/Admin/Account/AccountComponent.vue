@@ -8,12 +8,13 @@
                     </div>
                 </div>
             </div>
+            <h3 class="mb-4 mt-4">{{ user.name }}</h3>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card-blank">
                     	<div class="card-body">
                     		<center>
-                    			<img class="img-user shadow" style="width: 220px !important; border-radius: 50%;" src="app_home/images/icon/avatar-01.jpg" alt="{{user.name}}" />
+                    			<img class="img-user shadow" style="width: 220px !important; border-radius: 50%;" src="" alt="{{user.name}}" />
                     		</center>
                     		<hr>
                     		<div class="row">
@@ -25,8 +26,8 @@
 		                    			<h3>0/5</h3>
 		                    	</div>
 		                    	<div class="col-md-6">
-		                    		<label>Negocios</label>
-		                    			<h3>0 </h3>
+		                    		<label>Negocios/Sucursales</label>
+		                    			<h3>{{ branches.length }} </h3>
 		                    		<br> 
 		                    		<label>Trabajos realizados</label>
 		                    			<h3>0</h3>
@@ -63,6 +64,85 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <div class="card-blank">
+                        <div class="card-body">
+                            <h3>Sucursales</h3>
+                            <table class="table dataTable">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th>Dirección</th>
+                                        <th>Teléfono</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in branches" :key="item.id">
+                                        <td>{{ item.direction }}</td>
+                                        <td>{{ item.phone }}</td>
+                                        <td>
+                                            <span v-if="item.principal == 1">
+                                                <strong style="color: green">Principal</strong>
+                                            </span>
+                                             <span v-else>Sucursal</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-blank">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Datos Bancarios</strong>
+                                    <br>
+                                    {{ premises.bank.name }}
+                                    <br>
+                                    {{ premises.count_bank }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-blank">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Servicios</strong>
+                                    <br>
+                                    {{ premises.services.name }}
+                                    <br>
+                                    {{ premises.services.category.name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-blank">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Encargado</strong>
+                                    <br>
+                                    {{ premises.owner.name }}
+                                    {{ premises.owner.last_name }}
+                                    <br>
+                                    {{ premises.owner.phone }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                 	<div class="card-blank">
                     	<div class="card-body">
                     		<div class="float-left">
@@ -89,7 +169,9 @@
 
     export default {
     	props: {
-		    user: Array
+		    user: Array,
+            branches: Array,
+            premises:Array,
 		  },
         components: {
             AppLayout,
