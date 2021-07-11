@@ -4,7 +4,9 @@
         <jet-validation-errors class="mb-4" />
 
         <form @submit.prevent="submit">
-            <center><img src="images/logo_fondo_claro.png" width="140"/></center>
+            <center>
+                <img src="images/logo_fondo_claro.png" width="140"/>
+            </center>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">

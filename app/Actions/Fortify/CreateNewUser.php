@@ -29,6 +29,7 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         // dd($input);
+
         Validator::make($input, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
@@ -38,8 +39,8 @@ class CreateNewUser implements CreatesNewUsers
             //
             'direction' => ['required'],
             'description' => ['required'],
-            'phone' => ['required'],
-            'category_id' => ['required'],
+            'phone' => ['required', 'numeric'],
+            // 'category_id' => ['required'],
             'services_id' => ['required'],
             //
             'bank_id' => ['required'],
@@ -47,12 +48,31 @@ class CreateNewUser implements CreatesNewUsers
             //
             'name_employed' => ['required'],
             'last_name_employed' => ['required'],
-            'phone_employed' => ['required'],
-            'personal_email' => ['required'],
+            'phone_employed' => ['required', 'numeric'],
+            'personal_email' => ['required','string','email','unique:owners,email'],
             // 'password_personal' => ['required'],
             // 'password_confirmation_personal' => ['required'],
             //
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+        ],
+        [
+            'email.required' => 'Debe especificar un correo válido',
+            'email.required' => 'Debe especificar un correo válido',
+            'password.required' => 'Ingrese una contraseña válida',
+            'name.required' => 'Ingrese eñ nombre de su negocio',
+            'image.required' => 'Seleccione una imagen con el que se le pueda identificar',
+            'direction.required' => 'Especifique la dirección de su negocio',
+            'description.required' => 'Transcriba una descripción para que las personas puedan conocer su negocio',
+            'phone.required' => 'Especifique el teléfono de contacto de su negocio',
+            // 'category_id.required' => ''
+            'services_id.required' => 'Seleccione el tipo de servicio que ofrece su negocio',
+            'bank_id.required' => 'Indique el banco donde se operarán sus transferencias',
+            'count_bank.required' => 'Indique el número de cuenta del banco seleccionado',
+            'name_employed.required' => 'Ingrese el nombre del encargado',
+            'last_name_employed.required' => 'Ingrese el apellido del encargado',
+            'phone_employed.required' => 'Ingrese un teléfono de contacto válido del encargado',
+            'personal_email.required' => 'Ingrese un correo válido del encargado',
+            'terms.required' => 'Debe aceptar los términos y condiciones'
         ])->validate();
 
         $level_id=4;
@@ -134,7 +154,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         $branch=Branches::create([
             'direction' => $input['direction'],
-            'phone' => $input['description'],
+            'phone' => $input['phone'],
             'premise_id' => $premise->id,
             'principal' => 1
         ]);
