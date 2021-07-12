@@ -5,7 +5,7 @@
             <inertia-link
                 :href="route('dashboard')">
                 <center>
-                    <img src="images/logo_fondo_claro.png" alt="Klizto" style="width: 50% !important;" />
+                    <img v-bind:src="img_logo" alt="Klizto" style="width: 50% !important;" />
                 </center>
             </inertia-link>
         </div>
@@ -72,6 +72,10 @@
 
 <script>
     export default{
-        
+        data(){
+            return{
+                img_logo: 'images/logo_fondo_claro.png'
+            }
+        }
     }
 </script>

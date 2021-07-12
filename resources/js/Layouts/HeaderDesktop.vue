@@ -19,7 +19,7 @@
                             </div>
                             <div class="noti__item js-item-menu">
                                 <i class="zmdi zmdi-notifications"></i>
-                                <span class="quantity"></span>
+                                <!-- <span class="quantity"></span> -->
                                 <div class="notifi-dropdown js-dropdown">
                                     <div class="notifi__title">
                                         <p>You have 3 Notifications</p>
@@ -60,10 +60,10 @@
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="#" alt="Logo" />
+                                    <img v-bind:src="'/storage/'+$page.props.user.profile_photo_path" alt="Logo" />
                                 </div>
                                 <div class="content">
-                                    <a class="js-acc-btn" href="#">Carlos
+                                    <a class="js-acc-btn" href="#">{{ $page.props.user.name }}
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -71,14 +71,14 @@
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="#" alt="Logo" />
+                                                <img v-bind:src="'/storage/'+$page.props.user.profile_photo_path" alt="Logo" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="#">Carlos</a>
+                                                <a href="#">{{ $page.props.user.name }}</a>
                                             </h5>
-                                            <span class="email">Carlos@gmail.com</span>
+                                            <span class="email">{{ $page.props.user.email }}</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__footer">
@@ -104,7 +104,6 @@
             return this.$page.props.auth.user
           }
         },
-        props:['user'],
         data() {
             return {
                 showingNavigationDropdown: false,

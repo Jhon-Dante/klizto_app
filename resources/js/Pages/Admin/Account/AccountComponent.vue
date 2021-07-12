@@ -14,7 +14,7 @@
                     <div class="card-blank">
                     	<div class="card-body">
                     		<center>
-                    			<img class="img-user shadow" style="width: 220px !important; border-radius: 50%;" src="" alt="{{user.name}}" />
+                    			<img v-bind:src="'/storage/'+$page.props.user.profile_photo_path" class="img-user shadow" style="width: 300px !important; border-radius: 50%;" />
                     		</center>
                     		<hr>
                     		<div class="row">
@@ -62,37 +62,7 @@
 	                </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card-blank">
-                        <div class="card-body">
-                            <h3>Sucursales</h3>
-                            <table class="table dataTable">
-                                <thead>
-                                    <tr>
-                                        
-                                        <th>Dirección</th>
-                                        <th>Teléfono</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in branches" :key="item.id">
-                                        <td>{{ item.direction }}</td>
-                                        <td>{{ item.phone }}</td>
-                                        <td>
-                                            <span v-if="item.principal == 1">
-                                                <strong style="color: green">Principal</strong>
-                                            </span>
-                                             <span v-else>Sucursal</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="row">
                 <div class="col-md-4">
                     <div class="card-blank">

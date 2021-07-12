@@ -83,9 +83,10 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
                 'phone' => $input['phone'],
-                'profile_photo_path' => $this->uploadImage(1),
+                'profile_photo_path' => 'imagen',
                 'level_id' => $level_id
             ]), function (User $user) use ($input) {
+                $this->uploadImage($user, $input);
                 $this->createOwner($user, $input);
                 $this->createTeam($user, $input);
             });
@@ -99,9 +100,18 @@ class CreateNewUser implements CreatesNewUsers
      * @return void
      */
 
-    public function uploadImage($option)
+    public function uploadImage($user, $input)
     {
-        return $option;
+        // dd($input['image']);
+        $file = $input['image'];
+        //Se optiene el nombre
+        $name = time()."_".$file->getClientOriginalName();
+        //indicamos que queremos guardar un nuevo archivo en el disco local
+        \Storage::disk('public')->put($name,  \File::get($file));
+        // $avatar = Storage::putFile('public/defaults/users/avatar/', base64_decode($file_data));
+
+        $user->profile_photo_path=$name;
+        $user->save();
     }
 
     protected function createTeam(User $user, $input)

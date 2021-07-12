@@ -16,21 +16,34 @@
                 </div>
             </div>
 
-            <div class="row m-t-25">
+            <div class="row">
                 <div class="col-md-12">
-                    <div class="card-blank m-b-25">
-                    	<div v-if="premises.lenght" v-for="premise in premises" :key="premise.id">
-	                        <div class="card-header-blank">
-	                            <span class="card-title" style="font-size: 20px;"><strong>{{premises.name}}</strong></span>
-	                        </div>
-	                        <div class="card-body">
-	                        </div>
-                    	</div>
-	                    <div v-else>
-	                    	<div class="card-header-blank">
-		                    	<h4>Sin negocios registrados</h4>
-		                    </div>
-	                    </div>
+                    <div class="card-blank">
+                        <div class="card-body">
+                            <h3>Sucursales</h3>
+                            <table class="table dataTable">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th>Dirección</th>
+                                        <th>Teléfono</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in branches" :key="item.id">
+                                        <td>{{ item.direction }}</td>
+                                        <td>{{ item.phone }}</td>
+                                        <td>
+                                            <span v-if="item.principal == 1">
+                                                <strong style="color: green">Principal</strong>
+                                            </span>
+                                             <span v-else>Sucursal</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,6 +58,7 @@
     	props: {
 		    categories: Array,
 		    premises: Array,
+            branches: Array,
 		  },
         components: {
             AppLayout,

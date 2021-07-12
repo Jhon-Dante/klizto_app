@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Categories;
 use App\Models\Premises;
+use App\Models\Branches;
+use App\Models\Wallet;
 
 class PremisesController extends Controller
 {
@@ -17,11 +20,16 @@ class PremisesController extends Controller
      */
     public function index()
     {
-        $premises = Premises::all();
+        $user=User::find(\Auth::id());
+        $premises=Premises::where('user_id',\Auth::user()->id)->first();
+        $branches=Branches::where('premise_id', $premises->id)->get();
+        $wallet=Wallet::where('premise_id', $premises->id)->get();
+
         $categories = Categories::all();
 
         return Inertia::render('Admin/Premises/PremisesComponent',[
             'premises' => $premises,
+            'branches' => $branches,
             'categories' => $categories
         ]);
     }
@@ -47,14 +55,18 @@ class PremisesController extends Controller
      */
     public function store(Request $request)
     {
+        $premise=Premises::where('user_id',\Auth::id())->first();
 
-        $premise = New Premises;
-        $premise->nombre = $request->name;
-        $premise->category_id = $request->categories_id;
-        $premise->user_id = \Auth::id();
-        $premise->save();
+        $branch = New branches;
+        $branch->direction = $request->direction;
+        $branch->phone = $request->phone;
+        $branch->premise_id= $premise->id;
+        $branch->status= 1;
+        $branch->principal = '0';
+        $branch->save();
 
-        return Redirect::route('premises.index');
+        // return \Redirect::back();
+        return \Redirect::route('premises.index');
     }
 
     /**

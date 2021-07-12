@@ -21,14 +21,12 @@
                     	<form @submit.prevent="submit">
 	                        <div class="card-body">
 	                        	<div class="form-group">
-	                        		<label>Nombre</label>
-	                        		<input type="text" name="name" v-model="form.name" class="form-control">
+	                        		<label>Dirección</label>
+	                        		<textarea type="text" name="name" v-model="form.direction" class="form-control"></textarea>
 	                        	</div>
 	                        	<div class="form-group">
-	                        		<label>Categoria</label>
-	                        		<select class="form-control select2" v-model="form.categories_id">
-	                        			<option :value="category.id" v-for="category in categories" :key="category.id">{{category.name}}</option>
-	                        		</select>
+	                        		<label>Teléfono</label>
+	                        		<input id="phone" type="number" class="form-control" v-model="form.phone" required />
 	                        	</div>
 	                        	<center>
 	                        		<button class="btn btn-success" type="submit"> Añadir </button>
@@ -55,8 +53,8 @@
 		data() {
 		    return {
 		    	form: {
-		        	name: null,
-		        	categories_id: null,
+		        	direction: null,
+		        	phone: null,
 		      	},
 		    };
 		},
