@@ -40,4 +40,3 @@ Route::get('get/categories', [CategoriesController::class, 'get'])->name('get_ca
 Route::get('get/banks', [BanksController::class, 'get'])->name('get_banks');
 
 include "admin.php";
-include "buyer.php";

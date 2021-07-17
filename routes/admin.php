@@ -20,3 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//Admin
 	Route::get('settings', [SettingsController::class, 'index'])->name('settings');
 });
+
+
+
+include "buyer.php";
