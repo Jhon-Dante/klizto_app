@@ -6,6 +6,11 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ShopController;
 
 
+use App\Http\Controllers\Buyer\PublicationsController;
+use App\Http\Controllers\Buyer\PremisesController;
+use App\Http\Controllers\Buyer\EmployeesController;
+
+
 Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('account', AccountController::class);
@@ -22,5 +27,16 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
+// ---------------------------------------
 
-include "buyer.php";
+
+
+
+Route::get('get/ServiceEmployees/{service_id}',[EmployeesController::class, 'getServiceEmployees']);
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::resource('premises', PremisesController::class);
+	Route::resource('publications', PublicationsController::class);
+	//
+	Route::resource('employess', EmployeesController::class);
+});
