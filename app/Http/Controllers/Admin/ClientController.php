@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Wallet;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class WalletController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class WalletController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Wallet/WalletComponent');
+        //
     }
 
     /**

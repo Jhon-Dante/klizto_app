@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Categories;
-use App\Models\Premises;
 use App\Models\Branches;
-use App\Models\Wallet;
+use App\Models\Employees;
+use App\Models\Services;
+use Inertia\Inertia;
 
-class PremisesController extends Controller
+class EmployeesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,16 +18,19 @@ class PremisesController extends Controller
      */
     public function index()
     {
-        $user=User::find(\Auth::id());
-        $premises=Premises::where('user_id',\Auth::user()->id)->first();
-        $branches=Branches::with('employees')->where('premise_id', $premises->id)->get();
-        $wallet=Wallet::where('premise_id', $premises->id)->get();
+        //
+    }
 
-        $categories = Categories::all();
-        return Inertia::render('Buyer/Premises/PremisesComponent',[
-            'premises' => $premises,
-            'branches' => $branches,
-            'categories' => $categories
+    public function getServiceEmployees($service_id)
+    {
+        $employess= Employees::select('employees.*')
+        ->join('employees_services','employees_services.employees_id','=','employees.id')
+        ->where('employees_services.services_id',$service_id)
+        ->get();
+
+        return response()->json([
+            'result' => true,
+            'employess' => $employess
         ]);
     }
 
@@ -40,9 +41,12 @@ class PremisesController extends Controller
      */
     public function create()
     {
-        $categories= Categories::all();
-        return Inertia::render('Buyer/Premises/CreatePremisesComponent',[
-            'categories' => $categories
+        $services= Services::all();
+        $branches= Branches::all();
+
+        return Inertia::render('Buyer/Employees/CreateEmployessComponent',[
+            'services' => $services,
+            'branches' => $branches,
         ]);
     }
 
@@ -54,17 +58,24 @@ class PremisesController extends Controller
      */
     public function store(Request $request)
     {
-        $premise=Premises::where('user_id',\Auth::id())->first();
+        // dd($request->all());
+        $employee= new Employees;
+        $employee->name = $request->name;
+        $employee->age = $request->age;
+        $employee->description = $request->description;
+        $employee->gender = $request->gender;
+        $employee->save();
 
-        $branch = New branches;
-        $branch->direction = $request->direction;
-        $branch->phone = $request->phone;
-        $branch->premise_id= $premise->id;
-        $branch->status= 1;
-        $branch->principal = '0';
-        $branch->save();
+        $service=\DB::table('employees_services')->insert([
+            'services_id' => $request->services_id,
+            'employees_id' => $employee->id
+        ]);
 
-        // return \Redirect::back();
+        $branches=\DB::table('branches_employees')->insert([
+            'branches_id' => $request->branches_id,
+            'employees_id' => $employee->id
+        ]);
+
         return \Redirect::route('premises.index');
     }
 
@@ -110,6 +121,10 @@ class PremisesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $employee=Employees::find($id);
+
+        if ($employee->delete()) {
+        }
+        return \Redirect::route('premises.index');
     }
 }

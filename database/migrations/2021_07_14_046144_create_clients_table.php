@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePremisesTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,16 @@ class CreatePremisesTable extends Migration
      */
     public function up()
     {
-        Schema::create('premises', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            // $table->string('last_name');
             $table->unsignedBigInteger('user_id');
-
             $table->bigInteger('count_bank');
-
             $table->unsignedBigInteger('bank_id');
-            $table->foreign('bank_id')->references('id')->on('banks');
 
-            $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('owners');
-
-            $table->enum('status',['0','1','2'])->default('1')->comment('0: Inactivo; 1: Activo; 2: Eliminado;');
             $table->foreign('user_id')->references('id')->on('users');
-
+            $table->foreign('bank_id')->references('id')->on('banks');
             $table->timestamps();
         });
     }
@@ -39,6 +34,6 @@ class CreatePremisesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('premises');
+        Schema::dropIfExists('clients');
     }
 }

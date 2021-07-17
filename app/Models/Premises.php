@@ -10,13 +10,9 @@ class Premises extends Model
     use HasFactory;
 
     protected $table='premises';
-    protected $fillable=['user_id','service_id','count_bank','bank_id','owner_id','status'];
-    protected $with=['services','bank','owner'];
+    protected $fillable=['user_id','count_bank','bank_id','owner_id','status'];
+    protected $with=['bank','owner'];
 
-    public function services()
-    {
-        return $this->belongsTo('App\Models\Services','service_id');
-    }
     public function owner()
     {
     	return $this->belongsTo('App\Models\Owner','owner_id');
@@ -33,5 +29,9 @@ class Premises extends Model
     public function branches()
     {
         return $this->HasMany('App\Models\Branches','premise_id');
+    }
+       public function publication()
+    {
+        $this->HasMany('App\Models\Publications','premise_id');
     }
 }

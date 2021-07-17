@@ -16,4 +16,8 @@ class Banks extends Model
     {
     	return $this->HasMany('App\Models\User','bank_id');
     }
+    public function client()
+    {
+    	return $this->HasMany('App\Models\Clients','bank_id');
+    }
 }

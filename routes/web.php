@@ -29,7 +29,6 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-
 	Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 	    return Inertia::render('Admin/Dashboard');
 	})->name('dashboard');
@@ -42,3 +41,4 @@ Route::get('get/banks', [BanksController::class, 'get'])->name('get_banks');
 
 
 include "admin.php";
+include "buyer.php";

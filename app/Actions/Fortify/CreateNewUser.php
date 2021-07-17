@@ -28,54 +28,86 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
-        // dd($input);
+        if($input['option'] == 1){
+            Validator::make($input, [
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => $this->passwordRules(),
+                'name' => ['required', 'string', 'max:255'],
+                'bank_id' => ['required'],
+                'count_bank' => ['required'],
+                //
+                'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+            ],
+            [
+                'email.required' => 'Debe especificar un correo válido',
+                'password.required' => 'Ingrese una contraseña válida',
+                'name.required' => 'Ingrese eñ nombre de su negocio',
+                'bank_id.required' => 'Indique el banco donde se operarán sus transferencias',
+                'count_bank.required' => 'Indique el número de cuenta del banco seleccionado',
+                'terms.required' => 'Debe aceptar los términos y condiciones'
+            ])->validate();
 
-        Validator::make($input, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => $this->passwordRules(),
-            //
-            'name' => ['required', 'string', 'max:255'],
-            'image' => ['required','image','max:1024'],
-            //
-            'direction' => ['required'],
-            'description' => ['required'],
-            'phone' => ['required', 'numeric'],
-            // 'category_id' => ['required'],
-            'services_id' => ['required'],
-            //
-            'bank_id' => ['required'],
-            'count_bank' => ['required'],
-            //
-            'name_employed' => ['required'],
-            'last_name_employed' => ['required'],
-            'phone_employed' => ['required', 'numeric'],
-            'personal_email' => ['required','string','email','unique:owners,email'],
-            // 'password_personal' => ['required'],
-            // 'password_confirmation_personal' => ['required'],
-            //
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
-        ],
-        [
-            'email.required' => 'Debe especificar un correo válido',
-            'email.required' => 'Debe especificar un correo válido',
-            'password.required' => 'Ingrese una contraseña válida',
-            'name.required' => 'Ingrese eñ nombre de su negocio',
-            'image.required' => 'Seleccione una imagen con el que se le pueda identificar',
-            'direction.required' => 'Especifique la dirección de su negocio',
-            'description.required' => 'Transcriba una descripción para que las personas puedan conocer su negocio',
-            'phone.required' => 'Especifique el teléfono de contacto de su negocio',
-            // 'category_id.required' => ''
-            'services_id.required' => 'Seleccione el tipo de servicio que ofrece su negocio',
-            'bank_id.required' => 'Indique el banco donde se operarán sus transferencias',
-            'count_bank.required' => 'Indique el número de cuenta del banco seleccionado',
-            'name_employed.required' => 'Ingrese el nombre del encargado',
-            'last_name_employed.required' => 'Ingrese el apellido del encargado',
-            'phone_employed.required' => 'Ingrese un teléfono de contacto válido del encargado',
-            'personal_email.required' => 'Ingrese un correo válido del encargado',
-            'terms.required' => 'Debe aceptar los términos y condiciones'
-        ])->validate();
+            $level_id=4;
 
-        $level_id=4;
+            return DB::transaction(function () use ($input, $level_id) {
+                return tap(User::create([
+                    'name' => $input['name'],
+                    'email' => $input['email'],
+                    'password' => Hash::make($input['password']),
+                    'level_id' => $level_id
+                ]), function (User $user) use ($input) {
+                    // $this->uploadImage($user, $input);
+                    // $this->createWallet($user, $input);
+                    $this->createTeam($user, $input);
+                });
+            });
+
+        }else{
+            Validator::make($input, [
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => $this->passwordRules(),
+                //
+                'name' => ['required', 'string', 'max:255'],
+                'image' => ['required','image','max:1024'],
+                //
+                'direction' => ['required'],
+                'description' => ['required'],
+                'phone' => ['required', 'numeric'],
+                // 'category_id' => ['required'],
+                'bank_id' => ['required'],
+                'count_bank' => ['required'],
+                //
+                'name_employed' => ['required'],
+                'last_name_employed' => ['required'],
+                'phone_employed' => ['required', 'numeric'],
+                'personal_email' => ['required','string','email','unique:owners,email'],
+                // 'password_personal' => ['required'],
+                // 'password_confirmation_personal' => ['required'],
+                //
+                'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+            ],
+            [
+                'email.required' => 'Debe especificar un correo válido',
+                'email.required' => 'Debe especificar un correo válido',
+                'password.required' => 'Ingrese una contraseña válida',
+                'name.required' => 'Ingrese eñ nombre de su negocio',
+                'image.required' => 'Seleccione una imagen con el que se le pueda identificar',
+                'direction.required' => 'Especifique la dirección de su negocio',
+                'description.required' => 'Transcriba una descripción para que las personas puedan conocer su negocio',
+                'phone.required' => 'Especifique el teléfono de contacto de su negocio',
+                // 'category_id.required' => ''
+                'bank_id.required' => 'Indique el banco donde se operarán sus transferencias',
+                'count_bank.required' => 'Indique el número de cuenta del banco seleccionado',
+                'name_employed.required' => 'Ingrese el nombre del encargado',
+                'last_name_employed.required' => 'Ingrese el apellido del encargado',
+                'phone_employed.required' => 'Ingrese un teléfono de contacto válido del encargado',
+                'personal_email.required' => 'Ingrese un correo válido del encargado',
+                'terms.required' => 'Debe aceptar los términos y condiciones'
+            ])->validate();
+        }
+
+
+        $level_id=3;
 
         return DB::transaction(function () use ($input, $level_id) {
             return tap(User::create([
@@ -105,9 +137,9 @@ class CreateNewUser implements CreatesNewUsers
         // dd($input['image']);
         $file = $input['image'];
         //Se optiene el nombre
-        $name = time()."_".$file->getClientOriginalName();
+        $name = time()."".$user->id;
         //indicamos que queremos guardar un nuevo archivo en el disco local
-        \Storage::disk('public')->put($name,  \File::get($file));
+        \Storage::disk('user')->put($name,  \File::get($file));
         // $avatar = Storage::putFile('public/defaults/users/avatar/', base64_decode($file_data));
 
         $user->profile_photo_path=$name;
@@ -139,7 +171,6 @@ class CreateNewUser implements CreatesNewUsers
     {
         $premise=Premises::create([
             'user_id' => $user->id,
-            'service_id' => $input['services_id'],
             'count_bank' => $input['count_bank'],
             'bank_id' => $input['bank_id'],
             'owner_id' => $owner->id

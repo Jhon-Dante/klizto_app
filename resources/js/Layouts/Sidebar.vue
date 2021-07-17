@@ -45,7 +45,7 @@
                     </li>
                     <li>
                         <inertia-link
-                            :href="route('dashboard')">
+                            :href="route('publications.index')">
                             <i class="fa fa-tasks"></i>Mis Publicaciones
                         </inertia-link>
                     </li>

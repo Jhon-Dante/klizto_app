@@ -21,4 +21,9 @@ class Categories extends Model
     {
     	$this->HasMany('App\Models\Services','category_id');
     }
+
+    public function publication()
+    {
+        $this->HasMany('App\Models\Publications','category_id');
+    }
 }

@@ -9,7 +9,66 @@
             </center>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div v-if="form.option == ''">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <center>
+                                    <button class="btn btn-primary" @click="changeOption(1)">
+                                        Registrarme como cliente
+                                    </button> 
+                                </center>
+                            </div>
+                            <div class="col-md-6">
+                                <center>
+                                    <button class="btn btn-success" @click="changeOption(2)">
+                                        Registrarme como negocio
+                                    </button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" v-if="form.option == 1">
+                        <div class="card-body">
+                            <p><strong>Registrarme como cliente</strong></p>
+                            <div class="form-group">
+                                <jet-label for="name_client" value="Nombre" />
+                                <jet-input type="text" name="name_client" class="mt-1 block w-full" v-model="form.name"/>
+                            </div>
+                            <div class="form-group">
+                                <jet-label for="email_client" value="Correo" />
+                                <jet-input type="email" name="email_client" class="mt-1 block w-full" v-model="form.email"/>
+                            </div>
+                            <div class="form-group">
+                                <jet-label for="password" value="Contraseña" />
+                                <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" autocomplete="new-password" />
+                            </div>
+                            <div class="form-group">
+                                <jet-label for="password_confirmation" value="Confirmar Contraseña" />
+                                <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" autocomplete="new-password" />
+                            </div>
+                            <div class="mt-4">
+                                <jet-label for="bank_id" value="Banco" />
+                                <select class="form-control select2"
+                                name="bank_id"
+                                v-model="form.bank_id"
+                                :disabled="banks > null">
+                                    <option :value="bank.id" v-for="bank in banks" :key="bank.id">
+                                        {{bank.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-4 mt-4">
+                                <jet-label for="count_bank" value="Número de cuenta" />
+                                <jet-input type="number" id="count_bank" class="mt-1 block w-full" v-model="form.count_bank" />
+                            </div>
+                            <div class="float-right mt-4">
+                                <jet-button class="btn btn-success text-white" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                                    Registrar
+                                </jet-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" v-if="form.option == 2">
                         <div class="card-body">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item active">
@@ -32,19 +91,19 @@
                                 <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                                     <div class="mt-4">
                                         <jet-label for="email" value="Email" />
-                                        <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required />
+                                        <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
                                     </div>
 
 
 
                                     <div class="mt-4">
                                         <jet-label for="password" value="Contraseña" />
-                                        <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
+                                        <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" autocomplete="new-password" />
                                     </div>
 
                                     <div class="mt-4">
                                         <jet-label for="password_confirmation" value="Confirmar Contraseña" />
-                                        <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
+                                        <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" autocomplete="new-password" />
                                     </div>
                                     <div class="mt-4" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
                                         <jet-label for="terms">
@@ -64,13 +123,13 @@
                                 <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
                                     <div>
                                         <jet-label for="name" value="Nombre" />
-                                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autocomplete="name" />
+                                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
                                     </div>
                                     <div class="mt-4 mb-4">
                                         <center>
                                             <img id="imageSelected" class="shadow mb-5" src="#" @click="imageClick" width="300" height="300" />
 
-                                            <jet-input id="image" type="file" accept=".png" name="image" @change="imageSelected" required/>
+                                            <jet-input id="image" type="file" accept=".png" name="image" @change="imageSelected"/>
                                             <p>Recomendado: Imagen de mismas dimensiones. Ejm: 300x300</p>
                                         </center>
                                     </div>
@@ -86,38 +145,15 @@
                                 <div class="tab-pane fade" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                                     <div>
                                         <jet-label for="direction" value="Dirección" />
-                                        <textarea id="direction" class="form-control mt-1 block w-full" v-model="form.direction" required autocomplete="direction" ></textarea>
+                                        <textarea id="direction" class="form-control mt-1 block w-full" v-model="form.direction" autocomplete="direction" ></textarea>
                                     </div>
                                     <div>
                                         <jet-label for="name" value="Descripción" />
-                                        <textarea id="description" class="form-control mt-1 block w-full" v-model="form.description" required autocomplete="description" ></textarea>
+                                        <textarea id="description" class="form-control mt-1 block w-full" v-model="form.description" autocomplete="description" ></textarea>
                                     </div>
                                     <div class="mt-4">
                                         <jet-label for="phone" value="Teléfono" />
-                                        <jet-input id="phone" type="number" class="mt-1 block w-full" v-model="form.phone" required />
-                                    </div>
-                                    <div class="mt-4">
-                                        <jet-label for="phone" value="Categories" />
-                                        <select class="form-control select2"
-                                        v-model="form.category_id"
-                                        :disabled="categories > null"
-                                        @change="getServices"
-                                        >
-                                            <option :value="category.id" v-for="category in categories" :key="category.id">
-                                                {{category.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <jet-label for="phone" value="Servicios" />
-                                        <select class="form-control select2"
-                                        v-model="form.services_id"
-                                        :disabled="services > null">
-                                            <option :value="service.id" v-for="service in services" :key="service.id">
-                                                {{service.name}}
-                                            </option>
-                                        </select>
+                                        <jet-input id="phone" type="number" class="mt-1 block w-full" v-model="form.phone" />
                                     </div>
                                     <div class="float-left mt-4">
                                         <a class="btn btn-success text-white" @click="tabClick(2)">Anterior</a>
@@ -140,7 +176,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <jet-label for="count_bank" value="Número de cuenta" />
-                                        <jet-input type="number" id="count_bank" class="mt-1 block w-full" v-model="form.count_bank" required />
+                                        <jet-input type="number" id="count_bank" class="mt-1 block w-full" v-model="form.count_bank" />
                                     </div>
                                     <div class="float-left mt-4">
                                         <a class="btn btn-success text-white" @click="tabClick(3)">Anterior</a>
@@ -152,19 +188,19 @@
                                 <div class="tab-pane fade" id="employed" role="tabpanel" aria-labelledby="employed-tab">
                                     <div>
                                         <jet-label for="name_employed" value="Nombre" />
-                                        <jet-input type="text" id="name_employed" class="mt-1 block w-full" v-model="form.name_employed" required />
+                                        <jet-input type="text" id="name_employed" class="mt-1 block w-full" v-model="form.name_employed" />
                                     </div>
                                     <div>
                                         <jet-label for="last_name_employed" value="Apellido" />
-                                        <jet-input type="text" id="last_name_employed" class="mt-1 block w-full" v-model="form.last_name_employed" required />
+                                        <jet-input type="text" id="last_name_employed" class="mt-1 block w-full" v-model="form.last_name_employed" />
                                     </div>
                                     <div>
                                         <jet-label for="personal_email" value="Correo(Personal)" />
-                                        <jet-input type="text" id="personal_email" class="mt-1 block w-full" v-model="form.personal_email" required />
+                                        <jet-input type="text" id="personal_email" class="mt-1 block w-full" v-model="form.personal_email" />
                                     </div>
                                     <div>
                                         <jet-label for="phone_employed" value="Teléfono(Personal)" />
-                                        <jet-input type="text" id="phone_employed" class="mt-1 block w-full" v-model="form.phone_employed" required />
+                                        <jet-input type="text" id="phone_employed" class="mt-1 block w-full" v-model="form.phone_employed" />
                                     </div>
                                     <div>
                                         <div class="float-left mt-4">
@@ -183,14 +219,13 @@
                 </div>
             </div>
 
-            <center>
-                <div class="flex items-center justify-end mt-4">
+            <div class="items-center mt-4">
+                <center>
                     <inertia-link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
                         Ya está registrado?
                     </inertia-link>
-
-                </div>
-            </center>
+                </center>
+            </div>
         </form>
     </jet-authentication-card>
 </template>
@@ -199,6 +234,9 @@
     #imageSelected{
         border-radius: 50%;
         background-color: white;
+    }
+    .btn{
+        border-radius: 20px !important; 
     }
 </style>
 
@@ -222,13 +260,12 @@
             JetLabel,
             JetValidationErrors
         },
-        props:['categories','services'],
         data() {
             return {
-                categories: [],
-                services:[],
                 banks:[],
+                
                 form: this.$inertia.form({
+                    option: '',
                     email: '',
                     password: '',
                     password_confirmation: '',
@@ -239,8 +276,6 @@
                     direction:'',
                     description:'',
                     phone:'',
-                    category_id:'',
-                    services_id:'',
                     //
                     bank_id:'',
                     count_bank:'',
@@ -256,12 +291,6 @@
 
         methods: {
             load() {
-                axios.get('get/categories')
-                .then((res) => {
-                    if (res.data.result == true) {
-                        this.categories = res.data.categories;
-                    }
-                });
                 axios.get('get/banks')
                 .then((res) => {
                     if (res.data.result == true) {
@@ -269,14 +298,8 @@
                     }
                 })
             },
-            getServices() {
-                var id_category = this.form.category_id;
-                axios.get(`get/services/${id_category}`)
-                .then((res) => {
-                    if (res.data.result == true) {
-                        this.services = res.data.services;
-                    }
-                })
+            changeOption(event){
+                this.form.option = event == 1 ? 1 : 2
             },
             imageClick(){
                 $('#imageSelected').click();

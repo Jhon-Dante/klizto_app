@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'profile_photo_path', 'email','phone', 'password','profile_photo_path','level_id','status','verified'
+        'name', 'profile_photo_path', 'email', 'password','profile_photo_path','level_id','status','verified'
     ];
 
     protected $with = ['level'];
@@ -76,5 +76,9 @@ class User extends Authenticatable
     public function bank()
     {
         return $this->belongsTo('App\Models\Banks','bank_id');
+    }
+    public function client()
+    {
+        return $this->hasMany('App\Models\Clients','user_id');
     }
 }

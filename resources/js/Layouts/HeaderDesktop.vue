@@ -60,18 +60,17 @@
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
                                 <div class="image">
-                                    <img v-bind:src="'/storage/'+$page.props.user.profile_photo_path" alt="Logo" />
+                                    <img v-bind:src="'/storage/user/'+$page.props.user.profile_photo_path" alt="Logo" />
                                 </div>
                                 <div class="content">
                                     <a class="js-acc-btn" href="#">{{ $page.props.user.name }}
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </a>
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img v-bind:src="'/storage/'+$page.props.user.profile_photo_path" alt="Logo" />
+                                                <img v-bind:src="'/storage/user/'+$page.props.user.profile_photo_path" alt="Logo" />
                                             </a>
                                         </div>
                                         <div class="content">
