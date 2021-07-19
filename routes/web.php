@@ -26,7 +26,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('/');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -40,3 +40,4 @@ Route::get('get/categories', [CategoriesController::class, 'get'])->name('get_ca
 Route::get('get/banks', [BanksController::class, 'get'])->name('get_banks');
 
 include "admin.php";
+include "buyer.php";

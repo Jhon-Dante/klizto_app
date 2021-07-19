@@ -11,7 +11,7 @@
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
-                <ul class="list-unstyled navbar__list">
+                <ul class="list-unstyled navbar__list" v-if="$page.props.user.level_id == 3">
                     <li class="active">
                         <inertia-link
                             :href="route('dashboard')">
@@ -64,6 +64,20 @@
                         </inertia-link>
                     </li>
                 </ul>
+                <ul class="list-unstyled navbar__list" v-if="$page.props.user.level_id == 4">
+                    <li class="active">
+                        <inertia-link
+                            :href="route('dashboard')">
+                            <i class="fa fa-th-large"></i>Dashboard
+                        </inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link
+                            :href="route('account.index')">
+                            <i class="fa fa-dollar"></i>Mi Cuenta
+                        </inertia-link>
+                    </li>
+                </ul>
             </nav>
         </div>
     </aside>
@@ -74,7 +88,7 @@
     export default{
         data(){
             return{
-                img_logo: 'images/logo_fondo_claro.png'
+                img_logo: route('/')+'/images/logo_fondo_claro.png'
             }
         }
     }

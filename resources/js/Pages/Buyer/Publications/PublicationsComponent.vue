@@ -24,7 +24,7 @@
                                     <tbody>
                                         <tr class="tr-shadow" v-for="item in publications" :key="item.id">
                                             <td>
-                                                <img v-bind:src="'/storage/publication/'+item.img+'.png'">
+                                                <img v-bind:src="route('/')+'/storage/publication/'+item.images[0].image">
                                             </td>
                                             <td>
                                                 {{item.title}}

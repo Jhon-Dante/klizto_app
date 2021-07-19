@@ -11,26 +11,35 @@
             <form @submit.prevent="submit">
             	<h5><strong>1.- Agrega fotos del producto</strong></h5>
             	<div class="row justify-content-center mt-5">
-            		<div class="col-lg-2">
-                        <img id="imageSelected" class="shadow mb-5" src="#" @click="imageClick"/>
-                        <input type="file" id="selectedFile" accept=".png" style="display: none;" @change="imageSelected"/>
-                        <button type="button" class="btn btn-primary" onclick="document.getElementById('selectedFile').click();" >Seleccionar</button>
+            		<div class="col-md-2 col-lg-2">
+                        <div class="card text-center" style="border-style: dashed; width: 150px; height: 150px;" onclick="document.getElementById('selectedFile1').click();">
+                            <img v-bind:src="ico_img" id="imageSelected1" style="width: 50px; height: 50px;" />
+                        </div>
+                        <input type="file" id="selectedFile1" accept=".png" style="display: none;" @change="imageSelected($event, 1)"/>
             		</div>
-            		<div class="col-lg-2">
-                        <input type="file" id="selectedFile2" style="display: none;" @change="imageSelected"/>
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('selectedFile2').click();" disabled>Seleccionar</button>      
+            		<div class="col-md-2 col-lg-2">
+                        <div class="card text-center" style="border-style: dashed; width: 150px; height: 150px;" onclick="document.getElementById('selectedFile2').click();">
+                            <img v-bind:src="ico_img" id="imageSelected2" style="width: 50px; height: 50px;" />
+                        </div>
+                        <input type="file" id="selectedFile2" accept=".png" style="display: none;" @change="imageSelected($event, 2)"/>
                     </div>
-            		<div class="col-lg-2">
-                        <input type="file" id="selectedFile3" style="display: none;" @change="imageSelected"/>
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('selectedFile3').click();" disabled>Seleccionar</button>      
+            		<div class="col-md-2 col-lg-2">
+                        <div class="card text-center" style="border-style: dashed; width: 150px; height: 150px;" onclick="document.getElementById('selectedFile3').click();">
+                            <img v-bind:src="ico_img" id="imageSelected3" style="width: 50px; height: 50px;" />
+                        </div>
+                        <input type="file" id="selectedFile3" accept=".png" style="display: none;" @change="imageSelected($event, 3)"/>   
                     </div>
-            		<div class="col-lg-2">
-                        <input type="file" id="selectedFile4" style="display: none;" @change="imageSelected"/>
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('selectedFile4').click();" disabled>Seleccionar</button>      
+            		<div class="col-md-2 col-lg-2">
+                        <div class="card text-center" style="border-style: dashed; width: 150px; height: 150px;" onclick="document.getElementById('selectedFile4').click();">
+                            <img v-bind:src="ico_img" id="imageSelected4" style="width: 50px; height: 50px;" />
+                        </div>
+                        <input type="file" id="selectedFile4" accept=".png" style="display: none;" @change="imageSelected($event, 4)"/>   
                     </div>
-            		<div class="col-lg-2">
-                        <input type="file" id="selectedFile5" style="display: none;" @change="imageSelected"/>
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('selectedFile5').click();" disabled>Seleccionar</button>      
+            		<div class="col-md-2 col-lg-2">
+                        <div class="card text-center" style="border-style: dashed; width: 150px; height: 150px;" onclick="document.getElementById('selectedFile5').click();">
+                            <img v-bind:src="ico_img" id="imageSelected5" style="width: 50px; height: 50px;" />
+                        </div>
+                        <input type="file" id="selectedFile5" accept=".png" style="display: none;" @change="imageSelected($event, 5)"/>
                     </div>
             	</div>
                 <br />
@@ -84,10 +93,10 @@
             			</div>
             		</div>
             		<div class="col-md-4">
-            			Precio <input type="number" name="price" v-model="form.price">
+            			Precio <input type="number" name="price" v-model="form.price" v-on:keyup="calculateDiscount" >
             		</div>
             		<div class="col-md-4">
-            			Recibirás en tu billetera <input type="number" name="discount" v-model="form.discount" disabled>
+            			Recibirás en tu billetera <input type="number" name="discount" :value="discount" disabled>
             		</div>
             	</div>
             	<h5><strong>3.- Descripción y Condiciones</strong></h5>
@@ -120,6 +129,7 @@
 		border-color: #28a745!important;
 	}
 </style>
+
 <script>
     import AppLayout from '@/Layouts/AppLayout'
 
@@ -129,13 +139,16 @@
         },
         data(){
         	return{
+                ico_img: route('/')+'/images/ico-image.png',
         		categories:[],
                 services:[],
                 employess:[],
+                porcentage: 15,
+                discount:0,
 
         		form: this.$inertia.form({
                     //
-                    img:'',
+                    img:[],
                     //
                     date_ac_start:'',
                     date_ac_end:'',
@@ -157,7 +170,7 @@
         },
         methods:{
         	load() {
-        		var url = window.location.origin+'/get/categories';
+        		var url = route('/')+'/get/categories';
                 axios.get(url)
                 .then((res) => {
                     if (res.data.result == true) {
@@ -167,7 +180,7 @@
             },
             getServices() {
                 var id_category = this.form.category_id;
-                var url = window.location.origin+'/get/services/'+id_category;
+                var url = route('/')+'/get/services/'+id_category;
 
                 axios.get(url)
                 .then((res) => {
@@ -179,7 +192,7 @@
 
             getServiceEmployees(){
                 var service_id = this.form.service_id;
-                var url = window.location.origin+'/get/ServiceEmployees/'+service_id;
+                var url = route('/')+'/get/ServiceEmployees/'+service_id;
 
                 axios.get(url)
                 .then((res) => {
@@ -189,26 +202,41 @@
                     console.log(res.data);
                 })
             },
-            imageSelected(e){
+            imageSelected(e,o){
                 //
-                console.log(e);
                 e.preventDefault();
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                $('#imageSelected')
+                $('#imageSelected'+o)
                     .attr('src', e.target.result)
                     .css('width','100%')
                     .css('height','100%');
                 };
 
+                var selectedFiles = e.target.files;
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    let img = {
+                        src: URL.createObjectURL(selectedFiles[i]),
+                        file: selectedFiles[i],
+                    }
+                    this.form.img.push(e.target.files[i]);
+                }
                 reader.readAsDataURL(e.target.files[0]);
-                this.form.img = e.target.files[0];
+                // this.form.img = e.target.files[0];
+                console.log(this.form.img);
+            },
+            calculateDiscount(){
+                // var monto= 
+               var monto = this.form.price * (this.porcentage / 100);
+
+               this.discount = this.form.price - monto;
             },
             submit() {
               this.$inertia.post(route('publications.store'), this.form);
             },
         },
         mounted(){
+            console.log(this.routes);
         	this.load();
         }
 

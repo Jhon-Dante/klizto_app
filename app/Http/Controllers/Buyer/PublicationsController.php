@@ -43,20 +43,22 @@ class PublicationsController extends Controller
         ]);
     }
 
-    public function uploadImage($premise, $request)
+    public function uploadImage($premise, $request, $publications)
     {
         // dd($input['image']);
-        $file = $request->img;
-        //Se optiene el nombre
-        $name = time()."".$premise->user_id.".png";
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        \Storage::disk('publication')->put($name,  \File::get($file));
-        // $avatar = Storage::putFile('public/defaults/users/avatar/', base64_decode($file_data));
+        for ($i=0; $i < count($request->img) ; $i++) { 
 
-        // $user->profile_photo_path=$name;
-        // $user->save();
+            $file = $request->img[$i];
+            $name = time()."".$premise->user_id."".$i.".png";
+            \Storage::disk('publication')->put($name,  \File::get($file));
 
-        return $name;
+            \DB::table('publications_images')->insert([
+                'image' => $name,
+                // 'type' => 0,
+                'publications_id' => $publications->id
+            ]);
+        }
+        return true;
     }
 
     /**
@@ -71,30 +73,33 @@ class PublicationsController extends Controller
         // dd($request->all());
         $premise=Premises::where('user_id',\Auth::id())->first();
 
-        $name_img=$this->uploadImage($premise, $request);
 
         $discount=$request->price/0.15;
-        $publications=Publications::insert([
-            'premise_id' => $premise->id,
+        $publications= new Publications;
+        $publications->premise_id = $premise->id;
+        
+        $publications->img = 'image';
+        
+        $publications->date_ac_start = $request->date_ac_start;
+        $publications->date_ac_end = $request->date_ac_end;
+        
+        $publications->category_id = $request->category_id;
+        $publications->service_id = $request->service_id;
+        $publications->employee_id = $request->employee_id;
+        $publications->title = $request->title;
             //
-            'img' => $name_img,
+        $publications->price = $request->price;
+        $publications->discount = $discount;
             //
-            'date_ac_start' => $request->date_ac_start,
-            'date_ac_end' => $request->date_ac_end,
-            //
-            'category_id' => $request->category_id,
-            'service_id' => $request->service_id,
-            'employee_id' => $request->employee_id,
-            'title' => $request->title,
-            //
-            'price' => $request->price,
-            'discount' => $discount,
-            //
-            'description1' => $request->description1,
-            'description2' => $request->description2,
-            'description3' => $request->description3,
-            'description4' => $request->description4
-        ]);
+        $publications->description1 = $request->description1;
+        $publications->description2 = $request->description2;
+        $publications->description3 = $request->description3;
+        $publications->description4 = $request->description4;
+
+        $publications->save();
+
+        $name_img=$this->uploadImage($premise, $request, $publications);
+        
 
         return \Redirect::route('publications.index');
     }

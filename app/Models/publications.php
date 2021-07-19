@@ -11,7 +11,7 @@ class Publications extends Model
 
     protected $table='publications';
     protected $fillable=['premise_id','img','date_ac_start','date_ac_end','category_id','service_id','employee_id','title','price','discount','description1','description2','description3','description4','status'];
-    protected $with=['category','service','employee','premise'];
+    protected $with=['category','service','employee','premise','images'];
 
     public function category()
     {
@@ -28,5 +28,9 @@ class Publications extends Model
     public function premise()
     {
     	return $this->belongsTo('App\Models\Premises','premise_id');
+    }
+    public function images()
+    {
+        return $this->hasMany('App\Models\PublicationsImages','publications_id');
     }
 }
