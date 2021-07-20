@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Models\Branches;
 use App\Models\Employees;
 use App\Models\Services;
+use App\Models\Publications;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,6 @@ class Employees extends Model
 
     public function publication()
     {
-        $this->HasMany('App\Models\Publications','employee_id');
+        return $this->belongsToMany(Publications::class)->withPivot('publications_id');
     }
 }

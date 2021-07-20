@@ -27,6 +27,17 @@ class PublicationsController extends Controller
         ]);
     }
 
+
+    public function get()
+    {
+
+        $publications=Publications::all();
+        return response()->json([
+            'result' => true,
+            'publications' => $publications
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +45,16 @@ class PublicationsController extends Controller
      */
     public function create()
     {
-        $categories= Categories::all();
+        // dd(public_path());
+        $categories= \DB::table('categories')->select('categories.*')
+        ->join('services','services.category_id','=','categories.id')
+        ->join('employees_services','employees_services.services_id','=','services.id')
+        ->join('employees','employees.id','=','employees_services.employees_id')
+        // ->where('status',1)
+        ->groupBy('id')
+        ->get();
+
+        // dd($categories);
         $services= Services::all();
 
         return Inertia::render('Buyer/Publications/CreatePublicationsComponent',[
@@ -54,7 +74,7 @@ class PublicationsController extends Controller
 
             \DB::table('publications_images')->insert([
                 'image' => $name,
-                // 'type' => 0,
+                'url' => '/images/publications/'.$name,
                 'publications_id' => $publications->id
             ]);
         }
@@ -73,32 +93,34 @@ class PublicationsController extends Controller
         // dd($request->all());
         $premise=Premises::where('user_id',\Auth::id())->first();
 
-
         $discount=$request->price/0.15;
         $publications= new Publications;
         $publications->premise_id = $premise->id;
-        
         $publications->img = 'image';
-        
         $publications->date_ac_start = $request->date_ac_start;
         $publications->date_ac_end = $request->date_ac_end;
-        
         $publications->category_id = $request->category_id;
-        $publications->service_id = $request->service_id;
-        $publications->employee_id = $request->employee_id;
         $publications->title = $request->title;
-            //
         $publications->price = $request->price;
         $publications->discount = $discount;
-            //
-        $publications->description1 = $request->description1;
-        $publications->description2 = $request->description2;
-        $publications->description3 = $request->description3;
-        $publications->description4 = $request->description4;
 
         $publications->save();
 
         $name_img=$this->uploadImage($premise, $request, $publications);
+
+        for ($i=0; $i < count($request->service_id); $i++) { 
+            \DB::table('publications_services')->insert([
+                'services_id' => $request->service_id[$i],
+                'publications_id' => $publications->id
+            ]);
+        }
+
+        for ($i=0; $i < count($request->employee_id); $i++) { 
+            \DB::table('publications_employess')->insert([
+                'employees_id' => $request->employee_id[$i],
+                'publications_id' => $publications->id
+            ]);
+        }
         
 
         return \Redirect::route('publications.index');

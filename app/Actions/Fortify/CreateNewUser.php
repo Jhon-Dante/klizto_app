@@ -137,7 +137,7 @@ class CreateNewUser implements CreatesNewUsers
         // dd($input['image']);
         $file = $input['image'];
         //Se optiene el nombre
-        $name = time()."".$user->id;
+        $name = time()."".$user->id.".png";
         //indicamos que queremos guardar un nuevo archivo en el disco local
         \Storage::disk('user')->put($name,  \File::get($file));
         // $avatar = Storage::putFile('public/defaults/users/avatar/', base64_decode($file_data));

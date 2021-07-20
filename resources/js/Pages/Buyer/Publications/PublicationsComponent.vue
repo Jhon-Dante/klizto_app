@@ -24,7 +24,7 @@
                                     <tbody>
                                         <tr class="tr-shadow" v-for="item in publications" :key="item.id">
                                             <td>
-                                                <img v-bind:src="route('/')+'/storage/publication/'+item.images[0].image">
+                                                <img v-bind:src="route('/')+''+item.images[0].url">
                                             </td>
                                             <td>
                                                 {{item.title}}
@@ -36,7 +36,7 @@
                                             </td>
                                             <td>
                                                 {{item.category.name}}
-                                                {{item.employee.name}}
+                                                {{item.employess.name}}
                                             </td>
                                             <td>Precio <br> {{item.price}}</td>
                                             <td>Status <br> <button class="btn btn-primary btn-sm text-white">Activo</button></td>

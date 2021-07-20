@@ -4,26 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Employees;
 
 class Publications extends Model
 {
     use HasFactory;
 
     protected $table='publications';
-    protected $fillable=['premise_id','img','date_ac_start','date_ac_end','category_id','service_id','employee_id','title','price','discount','description1','description2','description3','description4','status'];
-    protected $with=['category','service','employee','premise','images'];
+    protected $fillable=['premise_id','img','date_ac_start','date_ac_end','category_id','title','price','discount','status'];
+
+    protected $with=['category','services','employess','premise','images','descriptions'];
 
     public function category()
     {
     	return $this->belongsTo('App\Models\Categories','category_id');
     }
-    public function service()
+    public function services()
     {
-    	return $this->belongsTo('App\Models\Services','service_id');
+    	return $this->hasMany('App\Models\PublicationsImages','publications_id');
     }
-    public function employee()
+    public function employess()
     {
-    	return $this->belongsTo('App\Models\Employees','employee_id');
+    	return $this->belongsToMany(Employees::class)->withPivot('employees_id');
     }
     public function premise()
     {
@@ -32,5 +34,9 @@ class Publications extends Model
     public function images()
     {
         return $this->hasMany('App\Models\PublicationsImages','publications_id');
+    }
+    public function descriptions()
+    {
+        return $this->hasMany('App\Models\PublicationsDescriptions','publications_id');
     }
 }

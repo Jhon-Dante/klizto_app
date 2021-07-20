@@ -39,5 +39,6 @@ Route::get('get/services/{category_id}', [ServicesController::class, 'get']);
 Route::get('get/categories', [CategoriesController::class, 'get'])->name('get_categories');
 Route::get('get/banks', [BanksController::class, 'get'])->name('get_banks');
 
+
 include "admin.php";
 include "buyer.php";

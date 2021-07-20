@@ -5,6 +5,7 @@ use App\Http\Controllers\Buyer\PremisesController;
 use App\Http\Controllers\Buyer\EmployeesController;
 
 
+Route::get('get/publications',[PublicationsController::class, 'get'])->name('get_publications');
 Route::get('get/ServiceEmployees/{service_id}',[EmployeesController::class, 'getServiceEmployees']);
 
 Route::group(['middleware' => 'auth'], function () {

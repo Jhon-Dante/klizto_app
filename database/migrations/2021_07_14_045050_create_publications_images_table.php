@@ -17,6 +17,7 @@ class CreatePublicationsImagesTable extends Migration
             $table->id();
             
             $table->unsignedBigInteger('publications_id');
+            $table->string('url');
             $table->string('image');
             $table->enum('type',['1','0'])->default('0')->comment('1: Imagen de portada; 0: Fotografía');
             $table->enum('status',['0','1','2'])->default('1')->comment('0: Inactivo; 1: Activo; 2: Eliminado;');

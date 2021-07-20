@@ -37,22 +37,21 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => public_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         'user' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/user'),
-            'url' => env('APP_URL').'/storage/user',
+            'root' => public_path() .'/images/users',
+            'url' => env('APP_URL').'/public/images/users',
             'visibility' => 'public',
         ],
-
         'publication' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/publication'),
-            'url' => env('APP_URL').'/storage/publication',
+            'root' => public_path() .'/images/publications',
+            'url' => env('APP_URL').'/public/images/publications',
             'visibility' => 'public',
         ],
 

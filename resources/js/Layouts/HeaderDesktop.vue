@@ -59,8 +59,8 @@
                         </div>
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
-                                <div class="image">
-                                    <img v-bind:src="route('/')+'/storage/user/'+$page.props.user.profile_photo_path" alt="Logo" />
+                                <div class="image" v-if="$page.props.user.profile_photo_path">
+                                    <img v-bind:src="route('/')+'/images/users/'+$page.props.user.profile_photo_path" alt="Logo" />
                                 </div>
                                 <div class="content">
                                     <a class="js-acc-btn" href="#">{{ $page.props.user.name }}
@@ -68,9 +68,9 @@
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
-                                        <div class="image">
+                                        <div class="image" v-if="$page.props.user.profile_photo_path">
                                             <a href="#">
-                                                <img v-bind:src="route('/')+'/storage/user/'+$page.props.user.profile_photo_path" alt="Logo" />
+                                                <img v-bind:src="route('/')+'/images/users/'+$page.props.user.profile_photo_path" alt="Logo" />
                                             </a>
                                         </div>
                                         <div class="content">

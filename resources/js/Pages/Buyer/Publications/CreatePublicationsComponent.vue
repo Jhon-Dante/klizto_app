@@ -58,6 +58,7 @@
                         v-model="form.category_id"
                         @change="getServices"
                         >
+                            <option selected disabled>Seleccione</option>
                             <option :value="category.id" v-for="category in categories" :key="category.id">
                                 {{category.name}}
                             </option>
@@ -66,9 +67,10 @@
                     <div class="col-md-4">
                         Servicios
                         <select
-                        v-model="form.service_id"
                         @change="getServiceEmployees"
+                        id="selectServices"
                         >
+                            <option selected disabled>Seleccione</option>
                             <option :value="category.id" v-for="category in services" :key="category.id">
                                 {{category.name}}
                             </option>
@@ -77,8 +79,10 @@
                     <div class="col-md-4">
                         Empleados
                         <select
-                        v-model="form.employee_id"
+                        @change="EmployeeSelected"
+                        id="selectEmployees"
                         >
+                            <option selected disabled>Seleccione</option>
                             <option :value="employee.id" v-for="employee in employess" :key="employee.id">
                                 {{employee.name}}
                             </option>
@@ -101,15 +105,12 @@
             	</div>
             	<h5><strong>3.- Descripción y Condiciones</strong></h5>
             	<div class="row justify-content-left mb-4">
-    	        	<div class="col-md-2">
-    	        		Escriba el título principal
+    	        	<div class="col-md-4">
+    	        		Descripción
             		</div>
             		<div class="col-md-4">
             			<input type="text" name="title" class="form-control mb-2" v-model="form.description1">
             			<input type="text" name="title" class="form-control" v-model="form.description2">
-            		</div>
-            		<div class="col-md-2">
-            			Escriba el título principal
             		</div>
             		<div class="col-md-4">
             			<input type="text" name="title" class="form-control mb-2" v-model="form.description3">
@@ -137,10 +138,13 @@
         components: {
             AppLayout,
         },
+        props:{
+            categories: Array,
+        },
         data(){
         	return{
                 ico_img: route('/')+'/images/ico-image.png',
-        		categories:[],
+        		// categories:[],
                 services:[],
                 employess:[],
                 porcentage: 15,
@@ -155,8 +159,8 @@
                     title:'',
                     //
         			category_id: '',
-                    service_id: '',
-                    employee_id:'',
+                    service_id:[],
+                    employee_id:[],
                     title: '',
                     price:'',
                     discount:'',
@@ -169,15 +173,15 @@
         	}
         },
         methods:{
-        	load() {
-        		var url = route('/')+'/get/categories';
-                axios.get(url)
-                .then((res) => {
-                    if (res.data.result == true) {
-                        this.categories = res.data.categories;
-                    }
-                })
-            },
+        	// load() {
+        	// 	var url = route('/')+'/get/categories';
+         //        axios.get(url)
+         //        .then((res) => {
+         //            if (res.data.result == true) {
+         //                this.categories = res.data.categories;
+         //            }
+         //        })
+         //    },
             getServices() {
                 var id_category = this.form.category_id;
                 var url = route('/')+'/get/services/'+id_category;
@@ -191,16 +195,25 @@
             },
 
             getServiceEmployees(){
-                var service_id = this.form.service_id;
-                var url = route('/')+'/get/ServiceEmployees/'+service_id;
 
+                var service_id = $('#selectServices').val();
+                // console.log(service_id)
+                var url = route('/')+'/get/ServiceEmployees/'+service_id;
                 axios.get(url)
                 .then((res) => {
                     if (res.data.result == true) {
                         this.employess = res.data.employess;
                     }
-                    console.log(res.data);
-                })
+                    // console.log(res.data);
+                });
+
+                this.form.service_id.push(service_id);
+                console.log(this.form.service_id);
+            },
+            EmployeeSelected(){
+                var employee_id = $('#selectEmployees').val();
+                this.form.employee_id.push(employee_id);
+                // console.log(this.form.employee_id);
             },
             imageSelected(e,o){
                 //
@@ -236,8 +249,8 @@
             },
         },
         mounted(){
-            console.log(this.routes);
-        	this.load();
+            // console.log(this.categories);
+        	// this.load();
         }
 
     }

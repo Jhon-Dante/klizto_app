@@ -15,8 +15,11 @@ class ServicesController extends Controller
      */
     public function get($category_id)
     {
-        $services = Services::where('deleted_at',null)
-        ->where('status',1)
+        $services = \DB::table('services')->select('services.*')
+        ->join('employees_services','employees_services.services_id','=','services.id')
+        ->join('employees','employees.id','=','employees_services.employees_id')
+        ->where('services.deleted_at',null)
+        ->where('services.status',1)
         ->when(!is_null($category_id), function ($query) use ($category_id) {
             $query->where('services.category_id', $category_id);
         })
