@@ -15,11 +15,18 @@ class ServicesController extends Controller
      */
     public function get($category_id)
     {
+        $user_id = \Auth::user()->id;
+
         $services = \DB::table('services')->select('services.*')
         ->join('employees_services','employees_services.services_id','=','services.id')
         ->join('employees','employees.id','=','employees_services.employees_id')
+        ->join('branches_employees','branches_employees.employees_id','=','employees.id')
+        ->join('branches','branches.id','=','branches_employees.branches_id')
+        ->join('premises','premises.id','=','branches.premise_id')
+        ->where('premises.user_id',$user_id)
         ->where('services.deleted_at',null)
-        ->where('services.status',1)
+        // ->where('services.status',1)
+        ->groupBy('services.id')
         ->when(!is_null($category_id), function ($query) use ($category_id) {
             $query->where('services.category_id', $category_id);
         })

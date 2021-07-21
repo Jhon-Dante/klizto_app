@@ -19,7 +19,14 @@ class PublicationsController extends Controller
      */
     public function index()
     {
-        $publications=Publications::all();
+        $user_id =\Auth::user()->id;
+
+
+        $publications=Publications::select('publications.*')
+        ->join('premises','premises.id','=','publications.premise_id')
+        ->where('premises.user_id',$user_id)
+        // ->where('publications.status',1)
+        ->get();
 
         // dd($publications);
         return Inertia::render('Buyer/Publications/PublicationsComponent',[
@@ -46,10 +53,17 @@ class PublicationsController extends Controller
     public function create()
     {
         // dd(public_path());
+        $user_id = \Auth::user()->id;
+
         $categories= \DB::table('categories')->select('categories.*')
         ->join('services','services.category_id','=','categories.id')
         ->join('employees_services','employees_services.services_id','=','services.id')
         ->join('employees','employees.id','=','employees_services.employees_id')
+        ->join('branches_employees','branches_employees.employees_id','=','employees.id')
+        ->join('branches','branches.id','=','branches_employees.branches_id')
+        ->join('premises','premises.id','=','branches.premise_id')
+        ->where('premises.user_id',$user_id)
+        ->where('services.deleted_at',null)
         // ->where('status',1)
         ->groupBy('id')
         ->get();
@@ -74,7 +88,7 @@ class PublicationsController extends Controller
 
             \DB::table('publications_images')->insert([
                 'image' => $name,
-                'url' => '/images/publications/'.$name,
+                'url' => '/public/images/publications/'.$name,
                 'publications_id' => $publications->id
             ]);
         }
@@ -116,7 +130,7 @@ class PublicationsController extends Controller
         }
 
         for ($i=0; $i < count($request->employee_id); $i++) { 
-            \DB::table('publications_employess')->insert([
+            \DB::table('employees_publications')->insert([
                 'employees_id' => $request->employee_id[$i],
                 'publications_id' => $publications->id
             ]);

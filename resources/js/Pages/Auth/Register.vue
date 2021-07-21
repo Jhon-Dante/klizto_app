@@ -127,9 +127,9 @@
                                     </div>
                                     <div class="mt-4 mb-4">
                                         <center>
-                                            <img id="imageSelected" class="shadow mb-5" src="#" @click="imageClick" width="300" height="300" />
+                                            <img id="imageSelected" class="shadow mb-5" v-bind:src="ico_img" @click="imageClick" width="300" height="300" onclick="document.getElementById('image').click();"/>
 
-                                            <jet-input id="image" type="file" accept=".png" name="image" @change="imageSelected"/>
+                                            <jet-input style="display: none" id="image" type="file" accept=".png" name="image" @change="imageSelected"/>
                                             <p>Recomendado: Imagen de mismas dimensiones. Ejm: 300x300</p>
                                         </center>
                                     </div>
@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="mt-4">
                                         <jet-label for="phone" value="Teléfono" />
-                                        <jet-input id="phone" type="number" class="mt-1 block w-full" v-model="form.phone" />
+                                        <input id="phone" type="number" class="form-control" v-model="form.phone" />
                                     </div>
                                     <div class="float-left mt-4">
                                         <a class="btn btn-success text-white" @click="tabClick(2)">Anterior</a>
@@ -176,7 +176,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <jet-label for="count_bank" value="Número de cuenta" />
-                                        <jet-input type="number" id="count_bank" class="mt-1 block w-full" v-model="form.count_bank" />
+                                        <input type="number" id="count_bank" class="form-control" v-model="form.count_bank" />
                                     </div>
                                     <div class="float-left mt-4">
                                         <a class="btn btn-success text-white" @click="tabClick(3)">Anterior</a>
@@ -200,7 +200,7 @@
                                     </div>
                                     <div>
                                         <jet-label for="phone_employed" value="Teléfono(Personal)" />
-                                        <jet-input type="text" id="phone_employed" class="mt-1 block w-full" v-model="form.phone_employed" />
+                                        <input type="text" id="phone_employed" class="form-control" v-model="form.phone_employed" />
                                     </div>
                                     <div>
                                         <div class="float-left mt-4">
@@ -262,6 +262,7 @@
         },
         data() {
             return {
+                ico_img: route('/')+'/images/ico-image.png',
                 banks:[],
                 
                 form: this.$inertia.form({

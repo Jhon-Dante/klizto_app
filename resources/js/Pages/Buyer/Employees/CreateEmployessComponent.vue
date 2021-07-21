@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="overview-wrap">
-                        <h2 class="title-1">Crear nuevo negocio</h2>
+                        <h2 class="title-1">Vincular Nuevo Empleado</h2>
                         <div class="float-right">
                         	<inertia-link
 				                :href="route('premises.index')"

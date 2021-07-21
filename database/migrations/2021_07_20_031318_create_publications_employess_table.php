@@ -13,7 +13,7 @@ class CreatePublicationsEmployessTable extends Migration
      */
     public function up()
     {
-        Schema::create('employees_publications', function (Blueprint $table) {
+        Schema::create('publications_employess', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('publications_id');
             $table->unsignedBigInteger('employees_id');

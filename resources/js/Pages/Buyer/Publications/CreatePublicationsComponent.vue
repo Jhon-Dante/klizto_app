@@ -50,7 +50,6 @@
             			<input type="time" name="" class="border-success" v-model="form.date_ac_start"> A <input type="time" name="" class="border-success" v-model="form.date_ac_end">
             		</div>
             	</div>
-            	<h5><strong>2.- Título y precio</strong></h5>
                 <div class="row mb-4">
                     <div class="col-md-4">
                         Categories
@@ -89,6 +88,7 @@
                         </select>
                     </div>
                 </div>
+            	<h5><strong>2.- Título y precio</strong></h5>
             	<div class="row justify-content-left mb-4">
             		<div class="col-md-12">
             			<div class="mb-4">

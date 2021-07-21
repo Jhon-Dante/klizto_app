@@ -23,8 +23,14 @@ class EmployeesController extends Controller
 
     public function getServiceEmployees($service_id)
     {
+        $user_id = \Auth::user()->id;
+        
         $employess= Employees::select('employees.*')
         ->join('employees_services','employees_services.employees_id','=','employees.id')
+        ->join('branches_employees','branches_employees.employees_id','=','employees.id')
+        ->join('branches','branches.id','=','branches_employees.branches_id')
+        ->join('premises','premises.id','=','branches.premise_id')
+        ->where('premises.user_id',$user_id)
         ->where('employees_services.services_id',$service_id)
         ->get();
 

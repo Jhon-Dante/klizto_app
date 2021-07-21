@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+<!--                 <div class="col-md-4">
                     <div class="card-blank">
                         <div class="card-body">
                             <div class="row">
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-4">
                     <div class="card-blank">
                         <div class="card-body">

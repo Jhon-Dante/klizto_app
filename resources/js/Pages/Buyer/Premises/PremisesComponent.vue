@@ -74,9 +74,8 @@
                         <div class="card shadow rounded border-success">
                             <div class="card-body">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">{{item.name}}<br />{{item.age}}</div>
-                                    <div class="col-md-4">{{item.description}}</div>
+                                    <div class="col-md-6">{{item.name}}<br />{{item.age}}</div>
+                                    <div class="col-md-6">{{item.description}}</div>
                                 </div>
                             </div>
                         </div>
@@ -97,9 +96,6 @@
                     Cancel
                 </jet-secondary-button>
 
-                <jet-button class="ml-2" @click="showEmployess" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Guardar
-                </jet-button>
             </template>
         </jet-dialog-modal>
     </app-layout>

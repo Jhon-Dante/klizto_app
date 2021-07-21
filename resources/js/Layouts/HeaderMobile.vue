@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <inertia-link class="logo" :href="route('dashboard')" v-if="$page.props.user.profile_photo_path != null">
-                        <img v-bind:src="route('/')+'/images/users/'+$page.props.user.profile_photo_path" alt="Logo" width="120" />
+                        <img v-bind:src="route('/')+'/public/images/users/'+$page.props.user.profile_photo_path" alt="Logo" width="120" />
                     </inertia-link>
                     <button class="hamburger hamburger--slider" type="button">
                         <span class="hamburger-box">

@@ -44,13 +44,13 @@ return [
 
         'user' => [
             'driver' => 'local',
-            'root' => public_path() .'/images/users',
+            'root' => public_path() .'/public/images/users',
             'url' => env('APP_URL').'/public/images/users',
             'visibility' => 'public',
         ],
         'publication' => [
             'driver' => 'local',
-            'root' => public_path() .'/images/publications',
+            'root' => public_path() .'/public/images/publications',
             'url' => env('APP_URL').'/public/images/publications',
             'visibility' => 'public',
         ],
