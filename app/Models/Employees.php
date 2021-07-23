@@ -14,7 +14,7 @@ class Employees extends Model
     use HasFactory;
 
     protected $table='employees';
-    protected $fillable=['name','age','description','gender'];
+    protected $fillable=['name','last_name'];
     // protected $with=['branches'];
 
     public function branches()

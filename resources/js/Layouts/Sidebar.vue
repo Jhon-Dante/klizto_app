@@ -11,71 +11,78 @@
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
-                <ul class="list-unstyled navbar__list" v-if="$page.props.user.level_id == 3">
-                    <li class="active">
-                        <inertia-link
-                            :href="route('dashboard')">
-                            <i class="fa fa-th-large"></i>Dashboard
-                        </inertia-link>
-                    </li>
-                    <li>
-                        <inertia-link
-                            :href="route('account.index')">
-                            <i class="fa fa-dollar"></i>Mi Cuenta
-                        </inertia-link>
-                    </li>
-                    <li class="has-sub">
-                        <inertia-link
-                            :href="route('premises.index')">
-                            <i class="fa fa-clipboard"></i>Mi Negocio
-                        </inertia-link>
-                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a href="#">Servicios</a>
-                            </li>
-                            <li>
-                                <a href="#">Empleados</a>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-unstyled navbar__list">
+                    <span v-if="$page.props.user.level_id == 3">
+                        <li class="active">
+                            <inertia-link
+                                :href="route('dashboard')">
+                                <i class="fa fa-th-large"></i>Dashboard
+                            </inertia-link>
+                        </li>
+                        <li>
+                            <inertia-link
+                                :href="route('account.index')">
+                                <i class="fa fa-dollar"></i>Mi Cuenta
+                            </inertia-link>
+                        </li>
+                        <li class="has-sub">
+                            <inertia-link
+                                :href="route('premises.index')">
+                                <i class="fa fa-clipboard"></i>Mi Negocio
+                            </inertia-link>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="#">Servicios</a>
+                                </li>
+                                <li>
+                                    <a href="#">Empleados</a>
+                                </li>
+                            </ul>
+                        </li>
 
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-shopping-cart"></i>Mis Ventas</a>
+                        </li>
+                        <li>
+                            <inertia-link
+                                :href="route('publications.index')">
+                                <i class="fa fa-tasks"></i>Mis Publicaciones
+                            </inertia-link>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-info-circle"></i>Mis Calificaciones</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-book"></i>Reportes</a>
+                        </li>
+                        <li>
+                            <inertia-link
+                                :href="route('settings')">
+                                <i class="fa fa-cogs"></i>Configuración
+                            </inertia-link>
+                        </li>
+                    </span>
+                    <span v-if="$page.props.user.level_id == 4">
+                        <li class="active">
+                            <inertia-link
+                                :href="route('dashboard')">
+                                <i class="fa fa-th-large"></i>Dashboard
+                            </inertia-link>
+                        </li>
+                        <li>
+                            <inertia-link
+                                :href="route('account.index')">
+                                <i class="fa fa-dollar"></i>Mi Cuenta
+                            </inertia-link>
+                        </li>
+                    </span>
                     <li>
-                        <a href="#">
-                            <i class="fa fa-shopping-cart"></i>Mis Ventas</a>
-                    </li>
-                    <li>
-                        <inertia-link
-                            :href="route('publications.index')">
-                            <i class="fa fa-tasks"></i>Mis Publicaciones
-                        </inertia-link>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-info-circle"></i>Mis Calificaciones</a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-book"></i>Reportes</a>
-                    </li>
-                    <li>
-                        <inertia-link
-                            :href="route('settings')">
-                            <i class="fa fa-cogs"></i>Configuración
-                        </inertia-link>
-                    </li>
-                </ul>
-                <ul class="list-unstyled navbar__list" v-if="$page.props.user.level_id == 4">
-                    <li class="active">
-                        <inertia-link
-                            :href="route('dashboard')">
-                            <i class="fa fa-th-large"></i>Dashboard
-                        </inertia-link>
-                    </li>
-                    <li>
-                        <inertia-link
-                            :href="route('account.index')">
-                            <i class="fa fa-dollar"></i>Mi Cuenta
-                        </inertia-link>
+                        <a href="#" @click="logout">
+                            <i class="zmdi zmdi-power"></i>Cerrar Sesión
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -90,6 +97,11 @@
             return{
                 img_logo: route('/')+'/images/logo_fondo_claro.png'
             }
-        }
+        },
+        methods: {
+            logout() {
+                this.$inertia.post(route('logout'));
+            },
+        },
     }
 </script>

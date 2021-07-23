@@ -25,25 +25,10 @@
 	                        		<input type="text" name="name" v-model="form.name" class="form-control" />
 	                        	</div>
 	                        	<div class="form-group">
-	                        		<label>Edad</label>
-	                        		<input id="age" type="date" class="form-control" v-model="form.age" required />
+	                        		<label>Apellido</label>
+	                        		<input id="last_name" type="text" class="form-control" v-model="form.last_name" required />
 	                        	</div>
-	                        	<div class="form-group">
-	                        		<label>Descripción</label>
-	                        		<textarea id="description" type="number" class="form-control" v-model="form.description" required ></textarea>
-	                        	</div>
-	                        	<div class="">
-	                        		<label>Género</label>
-	                        		<div>
-									    <input type="radio" id="gender1"
-									     name="gender" value="H" v-model="form.gender" class="border-primary" checked>
-									    <label for="gender">Hombre</label>
-
-									    <input type="radio" id="gender2"
-									     name="gender" value="M" v-model="form.gender" class="border-primary">
-									    <label for="gender">Mujer</label>
-									</div>
-	                        	</div>
+	                        	
 	                        	<div class="form-group">
 	                        		<label>Servicio</label>
 	                        		<select class="form-control select2"
@@ -95,18 +80,16 @@
 		    return {
 		    	form: {
 		        	name: '',
-					age: '',
-					description: '',
-					gender: 'H',
-					services_id:'',
-					branches_id:'',
+					last_name: '',
+					services_id:[],
+					branches_id:[],
 		      	},
 		    };
 		},
 		methods: {
-	    submit() {
-	      this.$inertia.post(route('employess.store'), this.form);
-	    },
-	  },
+		    submit() {
+		      this.$inertia.post(route('employess.store'), this.form);
+		    },
+	  	},
     }
 </script>

@@ -67,15 +67,17 @@ class EmployeesController extends Controller
         // dd($request->all());
         $employee= new Employees;
         $employee->name = $request->name;
-        $employee->age = $request->age;
-        $employee->description = $request->description;
-        $employee->gender = $request->gender;
+        $employee->last_name = $request->last_name;
         $employee->save();
 
-        $service=\DB::table('employees_services')->insert([
-            'services_id' => $request->services_id,
-            'employees_id' => $employee->id
-        ]);
+
+        // for ($i=0; $i < count($request->services_id); $i++) { 
+            $service=\DB::table('employees_services')->insert([
+                'services_id' => $request->services_id,
+                'employees_id' => $employee->id
+            ]);
+        // }
+
 
         $branches=\DB::table('branches_employees')->insert([
             'branches_id' => $request->branches_id,

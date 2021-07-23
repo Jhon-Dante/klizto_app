@@ -62,6 +62,12 @@
                                 {{category.name}}
                             </option>
                         </select>
+                        <br>
+                        <ul>
+                            <li v-for="category in category_id" :key="category.id">
+                                {{ category.name}}
+                            </li>
+                        </ul>
                     </div>
                     <div class="col-md-4">
                         Servicios

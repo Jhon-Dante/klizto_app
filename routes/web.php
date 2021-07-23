@@ -41,4 +41,4 @@ Route::get('get/banks', [BanksController::class, 'get'])->name('get_banks');
 
 
 include "admin.php";
-include "buyer.php";
+// include "buyer.php";

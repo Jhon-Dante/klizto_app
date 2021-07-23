@@ -74,8 +74,14 @@
                         <div class="card shadow rounded border-success">
                             <div class="card-body">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-6">{{item.name}}<br />{{item.age}}</div>
-                                    <div class="col-md-6">{{item.description}}</div>
+                                    <div class="col-md-6">{{item.name}}<br />{{item.last_name}}</div>
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li v-for="service in item.services" :key="service.id">
+                                                {{ service.name }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
