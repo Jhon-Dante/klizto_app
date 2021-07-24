@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Str;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -169,8 +170,13 @@ class CreateNewUser implements CreatesNewUsers
 
     protected function createPremise($user, $input, $owner)
     {
+         // $random = Str::random(10);
+        $date= substr(date('Y'),2);
+        $profile = strtolower(substr(\Auth::user()->name, 0, 5).''.$date);
+
         $premise=Premises::create([
             'user_id' => $user->id,
+            'profile' => $profile,
             'count_bank' => $input['count_bank'],
             'bank_id' => $input['bank_id'],
             'owner_id' => $owner->id

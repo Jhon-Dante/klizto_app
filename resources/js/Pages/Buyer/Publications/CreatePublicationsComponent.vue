@@ -50,51 +50,89 @@
             			<input type="time" name="" class="border-success" v-model="form.date_ac_start"> A <input type="time" name="" class="border-success" v-model="form.date_ac_end">
             		</div>
             	</div>
+                <h5><strong>2.- Categorias y servicios</strong></h5>
                 <div class="row mb-4">
-                    <div class="col-md-4">
-                        Categories
-                        <select
-                        v-model="form.category_id"
-                        @change="getServices"
-                        >
-                            <option selected disabled>Seleccione</option>
-                            <option :value="category.id" v-for="category in categories" :key="category.id">
-                                {{category.name}}
-                            </option>
-                        </select>
-                        <br>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select
+                            v-model="form.category_id"
+                            @change="getServices"
+                            style="width: 100% !important"
+                            >
+                                <option selected disabled>Categorias</option>
+                                <option :value="category.id" v-for="category in categories" :key="category.id">
+                                    {{category.name}}
+                                </option>
+                            </select>
+                        </div>
                         <ul>
                             <li v-for="category in category_id" :key="category.id">
                                 {{ category.name}}
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
-                        Servicios
-                        <select
-                        @change="getServiceEmployees"
-                        id="selectServices"
-                        >
-                            <option selected disabled>Seleccione</option>
-                            <option :value="category.id" v-for="category in services" :key="category.id">
-                                {{category.name}}
-                            </option>
-                        </select>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select
+                            v-if="services.length > 0"
+                            @change="getBranchesServices"
+                            id="selectServices"
+                            style="width: 100% !important"
+                            >
+                                <option selected disabled>Servicios</option>
+                                <option :value="category.id" v-for="category in services" :key="category.id">
+                                    {{category.name}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        Empleados
+                    <div class="col-md-3">
                         <select
-                        @change="EmployeeSelected"
-                        id="selectEmployees"
-                        >
-                            <option selected disabled>Seleccione</option>
-                            <option :value="employee.id" v-for="employee in employess" :key="employee.id">
-                                {{employee.name}}
-                            </option>
-                        </select>
+                            v-if="branches.length > 0"
+                            @change="getEmployeesBranches"
+                            id="selectBranch"
+                            style="width: 100% !important"
+                            >
+                                <option selected disabled>Sucursales</option>
+                                <option :value="branch.id" v-for="branch in branches" :key="branch.id">
+                                    {{branch.direction}}
+                                </option>
+                            </select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border border-success overflow-auto" style="height: 40px;">
+                            <div class="card" v-for="item in employess" :key="item.id">
+                                <div class="" @click="employeeSelected(item,key)">
+                                    {{item.name}} {{item.last_name}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            	<h5><strong>2.- Título y precio</strong></h5>
+                <div class="overflow-auto" style="height: 100px;">
+                    <div class="card" v-for="item in employessSelected" :key="item.id">
+                        <div class="card-body">
+                            <div class="row justify-content-center" @click="deleteEmployeeSelected(item,key)">
+                                <div class="col-md-4"><span class="btn btn-danger btn-sm rounded">x</span>{{item.name}} {{item.last_name}}</div>
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li v-for="service in item.services" :key="service.id">
+                                            <span class="btn btn-danger btn-sm rounded">x</span>{{service.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li v-for="branch in item.branches" :key="branch.id">
+                                            <span class="btn btn-danger btn-sm rounded">x</span>{{branch.direction}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            	<h5><strong>3.- Título y precio</strong></h5>
             	<div class="row justify-content-left mb-4">
             		<div class="col-md-12">
             			<div class="mb-4">
@@ -102,25 +140,17 @@
     	        			<input type="text" name="title" v-model="form.title">
             			</div>
             		</div>
-            		<div class="col-md-4">
+            		<div class="col-md-5">
             			Precio <input type="number" name="price" v-model="form.price" v-on:keyup="calculateDiscount" >
             		</div>
-            		<div class="col-md-4">
+            		<div class="col-md-6">
             			Recibirás en tu billetera <input type="number" name="discount" :value="discount" disabled>
             		</div>
             	</div>
-            	<h5><strong>3.- Descripción y Condiciones</strong></h5>
+            	<h5><strong>4.- Descripción</strong></h5>
             	<div class="row justify-content-left mb-4">
-    	        	<div class="col-md-4">
-    	        		Descripción
-            		</div>
-            		<div class="col-md-4">
-            			<input type="text" name="title" class="form-control mb-2" v-model="form.description1">
-            			<input type="text" name="title" class="form-control" v-model="form.description2">
-            		</div>
-            		<div class="col-md-4">
-            			<input type="text" name="title" class="form-control mb-2" v-model="form.description3">
-            			<input type="text" name="title" class="form-control" v-model="form.description4">
+            		<div class="col-md-12">
+            			<textarea class="ckeditor" id="ckeditor" name="description" v-model="form.description"></textarea>
             		</div>
                     <center>
                         <button class="btn btn-success" type="submit"> Añadir </button>
@@ -135,6 +165,14 @@
 		border-radius:15px;
 		border-color: #28a745!important;
 	}
+    .card{
+        margin-bottom: 0px !important;
+        border-radius: 20px !important;
+    }
+
+    .btn{
+        border-radius: 30% !important;
+    }
 </style>
 
 <script>
@@ -153,6 +191,8 @@
         		// categories:[],
                 services:[],
                 employess:[],
+                employessSelected:[],
+                branches:[],
                 porcentage: 15,
                 discount:0,
 
@@ -171,10 +211,7 @@
                     price:'',
                     discount:'',
                     //
-                    description1:'',
-                    description2:'',
-                    description3:'',
-                    description4:'',
+                    description:'',
                 })
         	}
         },
@@ -199,16 +236,15 @@
                     }
                 })
             },
-
-            getServiceEmployees(){
+            getBranchesServices(){
 
                 var service_id = $('#selectServices').val();
                 // console.log(service_id)
-                var url = route('/')+'/get/ServiceEmployees/'+service_id;
+                var url = route('/')+'/get/branch_services/'+service_id;
                 axios.get(url)
                 .then((res) => {
                     if (res.data.result == true) {
-                        this.employess = res.data.employess;
+                        this.branches = res.data.branches;
                     }
                     // console.log(res.data);
                 });
@@ -216,10 +252,29 @@
                 this.form.service_id.push(service_id);
                 console.log(this.form.service_id);
             },
-            EmployeeSelected(){
-                var employee_id = $('#selectEmployees').val();
-                this.form.employee_id.push(employee_id);
-                // console.log(this.form.employee_id);
+            getEmployeesBranches(){
+                const branch_id = $('#selectBranch').val();
+
+                var url = route('/')+'/get/employess_branches/'+branch_id;
+                axios.get(url)
+                .then((res) => {
+                    if (res.data.result == true) {
+                        this.employess = res.data.employess;
+                    }
+                    // console.log(res.data);
+                });
+            },
+            employeeSelected(item, key){
+                this.employessSelected.push(item);
+                this.form.employee_id.push(item.id);
+
+                this.employess.splice(key,1);
+            },
+            deleteEmployeeSelected(item, key){
+                this.employess.push(item);
+
+                this.employessSelected.splice(item,1);
+                this.form.employee_id.splice(key,1);
             },
             imageSelected(e,o){
                 //

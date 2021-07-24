@@ -36,7 +36,11 @@
                                             </td>
                                             <td>
                                                 {{item.category.name}}
-                                                {{item.employess.name}}
+                                                <ul>
+                                                    <li v-for="employee in item.employess">
+                                                        {{employee.name}} {{employee.last_name}}
+                                                    </li>
+                                                </ul>
                                             </td>
                                             <td>Precio <br> {{item.price}}</td>
                                             <td>Status <br> <button class="btn btn-primary btn-sm text-white">Activo</button></td>
@@ -74,9 +78,7 @@
     import AppLayout from '@/Layouts/AppLayout'
 
     export default {
-        props:{
-            publications: Array,
-        },
+        props:['publications'],
         components: {
             AppLayout,
         },

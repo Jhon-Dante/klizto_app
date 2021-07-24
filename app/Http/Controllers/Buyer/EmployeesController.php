@@ -40,19 +40,44 @@ class EmployeesController extends Controller
         ]);
     }
 
+
+    public function gesEmployeesBranches($branch_id)
+    {
+
+        $employess= Employees::select('employees.*')
+        ->join('branches_employees','branches_employees.employees_id','=','employees.id')
+        ->join('branches','branches.id','=','branches_employees.branches_id')
+        ->join('premises','premises.id','=','branches.premise_id')
+        ->where('branches.id',$branch_id)
+        ->get();
+
+
+        // dd($employess);
+
+        return response()->json([
+            'result' => true,
+            'employess' => $employess
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        
+        if (is_null($request->branch_id)) {
+            return \Redirect::route('premises.index');
+        }
+
         $services= Services::all();
-        $branches= Branches::all();
+        $branch = Branches::find($request->branch_id);
 
         return Inertia::render('Buyer/Employees/CreateEmployessComponent',[
             'services' => $services,
-            'branches' => $branches,
+            'branch' => $branch,
         ]);
     }
 
@@ -71,12 +96,12 @@ class EmployeesController extends Controller
         $employee->save();
 
 
-        // for ($i=0; $i < count($request->services_id); $i++) { 
+        for ($i=0; $i < count($request->services_id); $i++) { 
             $service=\DB::table('employees_services')->insert([
-                'services_id' => $request->services_id,
+                'services_id' => $request->services_id[$i],
                 'employees_id' => $employee->id
             ]);
-        // }
+        }
 
 
         $branches=\DB::table('branches_employees')->insert([

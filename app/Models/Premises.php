@@ -10,7 +10,7 @@ class Premises extends Model
     use HasFactory;
 
     protected $table='premises';
-    protected $fillable=['user_id','count_bank','bank_id','owner_id','status'];
+    protected $fillable=['user_id','profile','count_bank','bank_id','owner_id','status'];
     protected $with=['bank','owner'];
 
     public function owner()

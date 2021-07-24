@@ -16,6 +16,7 @@ class CreatePublicationsTable extends Migration
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('premise_id');
+            $table->string('code');
             $table->string('img');
             //
             $table->time('date_ac_start');
@@ -28,7 +29,8 @@ class CreatePublicationsTable extends Migration
             //
             $table->bigInteger('price');
             $table->bigInteger('discount');
-            //
+            
+            $table->longText('description')->nullable();
             // $table->text('description1');
             // $table->text('description2');
             // $table->text('description3');

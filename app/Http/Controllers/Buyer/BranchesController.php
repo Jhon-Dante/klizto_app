@@ -17,6 +17,23 @@ class BranchesController extends Controller
         //
     }
 
+    public function getBranchesServices($service_id)
+    {
+
+        $branches= \DB::table('branches')->select('branches.*')
+        ->join('branches_employees','branches_employees.branches_id','=','branches.id')
+        ->join('employees','employees.id','=','branches_employees.employees_id')
+        ->join('employees_services','employees_services.employees_id','=','employees.id')
+        ->join('services','services.id','=','employees_services.services_id')
+        ->where('services.id',$service_id)
+        ->groupBy('branches.direction')
+        ->get();
+
+        return response()->json([
+            'result' => true,
+            'branches' => $branches
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *

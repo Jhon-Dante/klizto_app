@@ -15,7 +15,7 @@ class Employees extends Model
 
     protected $table='employees';
     protected $fillable=['name','last_name'];
-    // protected $with=['branches'];
+    protected $with=['services','branches'];
 
     public function branches()
     {

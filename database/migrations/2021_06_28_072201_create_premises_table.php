@@ -16,6 +16,7 @@ class CreatePremisesTable extends Migration
         Schema::create('premises', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('profile');
 
             $table->bigInteger('count_bank');
 

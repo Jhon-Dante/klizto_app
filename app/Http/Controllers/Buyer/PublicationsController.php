@@ -9,6 +9,7 @@ use App\Models\publications;
 use App\Models\Categories;
 use App\Models\Services;
 use App\Models\Premises;
+use App\Models\Employees;
 
 class PublicationsController extends Controller
 {
@@ -104,10 +105,13 @@ class PublicationsController extends Controller
     public function store(Request $request)
     {
 
+        // $search_employees = Employees::find($request->employee_id[0]);
         // dd($request->all());
-        $premise=Premises::where('user_id',\Auth::id())->first();
 
+
+        $premise=Premises::where('user_id',\Auth::id())->first();
         $discount=$request->price/0.15;
+
         $publications= new Publications;
         $publications->premise_id = $premise->id;
         $publications->img = 'image';
@@ -117,24 +121,30 @@ class PublicationsController extends Controller
         $publications->title = $request->title;
         $publications->price = $request->price;
         $publications->discount = $discount;
+        // $publications->description= $request->description;
 
         $publications->save();
 
         $name_img=$this->uploadImage($premise, $request, $publications);
 
-        for ($i=0; $i < count($request->service_id); $i++) { 
-            \DB::table('publications_services')->insert([
-                'services_id' => $request->service_id[$i],
-                'publications_id' => $publications->id
-            ]);
+
+        for ($i=0; $i < count($request->employee_id); $i++) {
+            // $search_employees = Employees::find($request->employee_id[$i]);
+            
+            // for ($j=0; $j < count($search_employees->services); $j++) { 
+                $employees = \DB::table('employees_publications')->insert([
+                    'publications_id' => $publications->id,
+                    'employees_id' => $request->employee_id[$i]
+                ]);
+            // }
         }
 
-        for ($i=0; $i < count($request->employee_id); $i++) { 
-            \DB::table('employees_publications')->insert([
-                'employees_id' => $request->employee_id[$i],
-                'publications_id' => $publications->id
-            ]);
-        }
+        // for ($i=0; $i < count($request->description); $i++) { 
+        //     \DB::table('publications_services')->insert([
+        //         'employees_id' => $request->employee_id[$i],
+        //         'publications_id' => $publications->id
+        //     ]);
+        // }
         
 
         return \Redirect::route('publications.index');

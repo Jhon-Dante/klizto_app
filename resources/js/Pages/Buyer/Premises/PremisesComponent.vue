@@ -91,6 +91,8 @@
                     </div>
                     <inertia-link
                         :href="route('employess.create')"
+                        method="get"
+                        :data="{ branch_id: this.branch_id }"
                       >
                         Agregar
                      </inertia-link>

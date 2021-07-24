@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Buyer\PublicationsController;
 use App\Http\Controllers\Buyer\PremisesController;
 use App\Http\Controllers\Buyer\EmployeesController;
+use App\Http\Controllers\Buyer\BranchesController;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -32,7 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
 // ---------------------------------------
 
 
-
+Route::get('get/branch_services/{service_id}',[BranchesController::class, 'getBranchesServices']);
+Route::get('get/employess_branches/{branch_id}',[EmployeesController::class, 'gesEmployeesBranches']);
 Route::get('get/publications',[PublicationsController::class, 'get'])->name('get_publications');
 Route::get('get/ServiceEmployees/{service_id}',[EmployeesController::class, 'getServiceEmployees']);
 

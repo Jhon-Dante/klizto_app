@@ -20,8 +20,6 @@ class PremisesController extends Controller
      */
     public function index()
     {
-        $user=User::find(\Auth::id());
-        
         $premises=Premises::where('user_id',\Auth::user()->id)->first();
         $branches=Branches::with('employees')->where('premise_id', $premises->id)->get();
         $wallet=Wallet::where('premise_id', $premises->id)->get();
@@ -39,8 +37,9 @@ class PremisesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        dd($request);
         $categories= Categories::all();
         return Inertia::render('Buyer/Premises/CreatePremisesComponent',[
             'categories' => $categories

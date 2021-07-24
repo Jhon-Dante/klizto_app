@@ -11,9 +11,9 @@ class Publications extends Model
     use HasFactory;
 
     protected $table='publications';
-    protected $fillable=['premise_id','img','date_ac_start','date_ac_end','category_id','title','price','discount','status'];
+    protected $fillable=['premise_id','img','code','date_ac_start','date_ac_end','category_id','title','price','discount','description','status'];
 
-    protected $with=['category','services','employess','premise','images','descriptions'];
+    protected $with=['category','employess','premise','images','descriptions'];
 
     public function category()
     {
