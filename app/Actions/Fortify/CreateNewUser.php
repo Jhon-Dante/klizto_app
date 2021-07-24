@@ -172,7 +172,7 @@ class CreateNewUser implements CreatesNewUsers
     {
          // $random = Str::random(10);
         $date= substr(date('Y'),2);
-        $profile = strtolower(substr(\Auth::user()->name, 0, 5).''.$date);
+        $profile = strtolower(substr($input['name'], 0, 5).''.$date);
 
         $premise=Premises::create([
             'user_id' => $user->id,
